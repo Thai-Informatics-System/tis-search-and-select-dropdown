@@ -1,63 +1,207 @@
-# TisSearchAndSelectDropdown
+# tis-search-and-select-dropdown
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
+A powerful Angular Material-based dropdown component library by **Thai Informatic Systems Co. Ltd.**, offering flexible and customizable search-select dropdowns for both **client-side** and **server-side** data. It supports **single** and **multiple selection**, rich configuration options, hints, refresh support, and create-new actions — all built for modern Angular apps.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🚀 Features
 
-```bash
-ng generate component component-name
-```
+- ✅ Single & Multiple selection modes
+- ✅ Client-side and Server-side data filtering
+- ✅ Searchable dropdown with custom filters
+- ✅ Dynamic "Create New" action
+- ✅ Hint messages & refresh button support
+- ✅ Fully compatible with Angular Reactive Forms
+- ✅ Material Design (Angular Material)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the library, run:
+## 📦 Installation
 
 ```bash
-ng build tis-search-and-select-dropdown
+npm install tis-search-and-select-dropdown
 ```
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
-
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-   ```bash
-   cd dist/tis-search-and-select-dropdown
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Required Peer Dependencies
 
 ```bash
-ng test
+npm install @angular/material @angular/cdk
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 🧩 Usage
 
-```bash
-ng e2e
+### Module Setup
+
+```ts
+import { TisSearchAndSelectDropdownModule } from 'tis-search-and-select-dropdown';
+
+@NgModule({
+  imports: [TisSearchAndSelectDropdownModule]
+})
+export class MyFeatureModule {}
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 🧠 Components
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### `<tis-client-side-dropdown>`
+Use when the full dataset is available in memory.
+
+### `<tis-server-side-dropdown>`
+Use when dropdown options should be fetched dynamically from an API endpoint.
+
+---
+
+## 💡 Quick Example
+
+```html
+<form [formGroup]="form">
+  <tis-client-side-dropdown
+    type="single"
+    label="Client Side Single"
+    nameKey="email"
+    valueKey="id"
+    [data]="options1"
+    [config]="config.singleClientSideSelect"
+    formControlName="singleClientSideSelect"
+    (selectedValueNamesUpdated)="setOptionFirstData($event)">
+  </tis-client-side-dropdown>
+</form>
+```
+
+---
+
+## ⚙️ Configuration Object
+
+Both client- and server-side components accept configuration inputs defined in the following structure:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `uri` | `string \| null` | API endpoint (for server-side) |
+| `method` | `string \| null` | HTTP method (GET, POST) |
+| `limit` | `number \| null` | Max items to retrieve/display |
+| `setFirstOption` | `boolean \| null` | Auto-select first option |
+| `ifLengthOnlyOne` | `boolean \| null` | Auto-select if only one result |
+| `filter` | `object \| null` | Payload filters for server request |
+| `isAllOption` | `boolean` | Include "All" option |
+| `isSearchable` | `boolean` | Enable client search filtering |
+| `isEnableRefreshMode` | `boolean` | Show refresh button |
+| `clickRefreshBtn` | `Function` | Callback for refresh click |
+| `hint` | `Hint` | Inline help below the dropdown |
+| `createNew` | `CreateNew` | Define custom action to add new options |
+| `noEntriesFoundLabel` | `string` | Message when list is empty |
+| `additionalName` | `AdditionalName` | Combine multiple fields for label |
+| `dataValueKey` | `string` | Key path to extract data |
+
+> Interfaces for these are exported and fully type-safe.
+
+---
+
+## 🔌 Inputs & Outputs
+
+### Shared Inputs
+- `type`: `'single' | 'multiple'`
+- `label`: `string`
+- `nameKey`: `string`
+- `valueKey`: `string`
+- `data`: `any[]` (optional for server-side)
+- `config`: `ClientSide/ServerSide[Single|Multiple]SelectionConfig`
+- `formControlName`: `string`
+- `classes`: `string` (CSS classes)
+
+### Output Events
+- `(selectedValueNamesUpdated)`: Emits selected values or array depending on mode
+
+---
+
+## 📤 Real-World Example (Reactive Form)
+
+```ts
+this.form = new FormGroup({
+  singleClientSideSelect: new FormControl('*'),
+  multipleClientSideSelect: new FormControl('*'),
+  singleServerSideSelect: new FormControl('*'),
+  multipleServerSideSelect: new FormControl(null),
+});
+```
+
+```ts
+this.config = {
+  singleClientSideSelect: {
+    uri: 'https://api.freeapi.app/api/v1/public/randomusers',
+    method: 'GET',
+    limit: 100,
+    isSearchable: true,
+    isAllOption: true,
+    hint: {
+      msg: 'This is hint for example'
+    },
+    dataValueKey: 'data.data'
+  },
+  multipleServerSideSelect: {
+    uri: 'https://mocki.io/v1/32ff3217-e809-442c-8e63-b4b0a8416325',
+    method: 'GET',
+    limit: 100,
+    isSearchable: true,
+    isAllOption: true,
+    createNew: {
+      label: 'Click here to add new.',
+      color: 'green',
+      clickBtn: () => window.open('https://www.google.com/', '_blank')
+    }
+  }
+};
+```
+
+---
+
+## 📦 Exported Types
+
+- `ClientSideSingleSelectionConfig`
+- `ClientSideMultipleSelectionConfig`
+- `ServerSideSingleSelectionConfig`
+- `ServerSideMultipleSelectionConfig`
+- `SelectedFilterDisplayValueType`
+- `SelectedFiltersGroupedValuesType`
+- `ValidationMessages`
+
+---
+
+## 🎨 Styling
+
+The library uses Angular Material components. Ensure you’ve included a Material theme:
+
+```scss
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+```
+
+Custom styles can be added using the `classes` input.
+
+---
+
+## 🤝 Contributing
+
+1. Clone the repository
+2. Run `npm install`
+3. Run `ng build tis-search-and-select-dropdown --watch`
+4. Test changes via your demo app under `projects/`
+
+---
+
+## 📄 License
+
+MIT License © Thai Informatic Systems Co. Ltd.
+
+---
+
+## 📬 Support / Questions
+
+For bugs, suggestions, or feature requests, please open an issue on the [GitHub repository](https://github.com/Thai-Informatics/tis-search-and-select-dropdown) *(replace with actual link if available)*.
+
+---
+
+> Made with ❤️ by Thai Informatic Systems Co. Ltd.
+
