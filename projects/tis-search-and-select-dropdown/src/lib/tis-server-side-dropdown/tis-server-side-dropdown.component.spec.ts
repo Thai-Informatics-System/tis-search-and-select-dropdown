@@ -8,7 +8,7 @@ describe('TisServerSideDropdownComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TisServerSideDropdownComponent]
+      declarations: [TisServerSideDropdownComponent]
     })
     .compileComponents();
 

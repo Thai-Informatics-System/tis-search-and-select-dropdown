@@ -1,0 +1,51 @@
+.mat-select-search-hidden {
+  visibility: hidden;
+}
+
+.mat-select-search-inner {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-bottom: 1px solid #cccccc;
+  background: white;
+  z-index: 100;
+}
+
+/* .mat-select-search-inner.mat-select-search-inner-multiple {
+  width: calc(100% - 15px);
+} */
+
+::ng-deep .mat-select-search-panel {
+  transform: none !important;
+  max-height: 350px;
+  margin-top: 50px !important;
+}
+
+::ng-deep .mat-select-search-panel mat-select-search .mat-select-search-inner input::placeholder {
+  color: #888; /* Ensure it's visible */
+  opacity: 1;   /* Ensure it's not fully transparent */
+  display: unset !important;
+}
+
+.mat-select-search-input {
+  padding: 16px;
+  padding-right: 36px;
+  box-sizing: border-box;
+  height: unset;
+  margin-top: 0px;
+  box-sizing: border-box;
+}
+
+.mat-select-search-no-entries-found {
+  padding: 16px;
+}
+
+.mat-select-search-clear {
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
+
+::ng-deep .cdk-overlay-pane-select-search {
+  margin-top: -50px;
+}

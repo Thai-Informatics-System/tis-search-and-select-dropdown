@@ -1,0 +1,48 @@
+<ul class="tis-dropdown {{classes}}" style="width: 100%; display: inline-flex; align-items: center; padding: 0px; margin: 0px;">
+    <li style="--list-width: {{config?.isEnableRefreshMode? '40px': '0px'}}; list-style: none; padding: 0px; margin: 0px; position: relative; min-width: calc(100% - var(--list-width));">
+        <mat-form-field class="tis-client-side-single-select" style="width: 100%;" [appearance]="appearance">
+            <mat-label>{{label}}</mat-label>
+            <mat-select [formControl]="listCtrl" #singleSelect (openedChange)="onOpenedChange($event)">
+                @if (config?.isSearchable) {
+                    <!-- [placeholderLabel]="placeholder ?? label" -->
+                    <mat-select-search [formControl]="searchFilterCtrl" [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="noEntriesFoundLabel" [loading]="loading"></mat-select-search>
+                }
+        
+                @if (config?.isAllOption && searchFilterCtrl.value == '') {
+                    <mat-option value="*">All</mat-option>
+                }
+                <ng-container *ngFor="let option of options | async">
+                    <mat-option *ngIf="option && option[valueKey]" [value]="option[valueKey]" matTooltipPosition="right" [matTooltip]="option[nameKey] + '' + displayAdditional(option)">
+                        {{option[nameKey]}} <span *ngIf="(additionalNameKeys?.length ?? 0) > 0">{{displayAdditional(option)}}</span>
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+            @for (validation of validationMessages; track validation.type) {
+                <mat-error *ngIf="listCtrl?.hasError(validation.type) && (listCtrl?.dirty || listCtrl?.touched)">
+                    {{validation.message}}
+                </mat-error>
+            }
+        
+            @if (config?.hint && (config?.hint?.label || config?.hint?.msg)) {
+                <mat-hint style="line-height: 0px !important;">
+                    <p style="margin: 0px;">
+                        <span [style.color]="config?.hint?.color" *ngIf="config?.hint?.label">{{config?.hint?.label}} : </span>
+                        {{ config?.hint?.msg }}
+                    </p>
+                </mat-hint>
+            }
+        
+            @if (config?.createNew && config?.createNew?.label) {
+                <mat-hint [style.padding]="config?.hint ? '4px' : null">
+                    <a [routerLink]="config?.createNew?.url" target="_blank" style="text-decoration: underline; cursor: pointer;" [style.color]="config?.createNew?.color" *ngIf="!config?.createNew?.clickBtn">{{config?.createNew?.label}}</a>
+                    <a style="text-decoration: underline; cursor: pointer;" [style.color]="config?.createNew?.color" *ngIf="config?.createNew?.clickBtn" (click)="config?.createNew?.clickBtn()">{{config?.createNew?.label}}</a>
+                </mat-hint>
+            }
+        </mat-form-field>
+        <i class="fas fa-spinner fa-spin" style="position: absolute; top: 20px; right: 13px" *ngIf="loading"></i>
+    </li>
+    <li style="list-style: none; width: 40px; padding: 0px; margin: 0px; margin-left: 5px; margin-bottom: 15px; padding-bottom: 5px;" *ngIf="config?.isEnableRefreshMode">
+        <mat-icon style="cursor: pointer; position: relative !important" (click)="config?.clickRefreshBtn ? config?.clickRefreshBtn() : refreshData();" *ngIf="!isRefreshing">autorenew</mat-icon>
+        <mat-progress-spinner mode="indeterminate" [diameter]="20" *ngIf="isRefreshing"></mat-progress-spinner>
+    </li>
+</ul>

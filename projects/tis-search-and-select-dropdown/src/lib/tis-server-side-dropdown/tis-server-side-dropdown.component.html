@@ -1,1 +1,14 @@
-<p>tis-server-side-dropdown works!</p>
+@if(type == 'single'){
+    <app-select-single [appearance]="appearance" [classes]="classes" [label]="label" [placeholder]="placeholder"
+        [formControl]="fc" [isRequired]="isRequired" [nameKey]="nameKey" [valueKey]="valueKey" [initialData]="data"
+        (initialDataChange)="setData($event)" [validationMessages]="validationMessages" [config]="config"
+        [(loading)]="loading" (loadingChange)="onLoadingChange($event)" [(refetch)]="toggle"
+        [isRequiredPayload]="isRequiredPayload"></app-select-single>
+}
+@else if(type == 'multiple'){
+    <app-select-multiple [appearance]="appearance" [classes]="classes" [label]="label" [placeholder]="placeholder"
+        [formControl]="fc" [isRequired]="isRequired" [nameKey]="nameKey" [valueKey]="valueKey" [initialData]="data"
+        (initialDataChange)="setData($event)" [validationMessages]="validationMessages" [config]="config"
+        [(loading)]="loading" (loadingChange)="onLoadingChange($event)" [(refetch)]="toggle"
+        [isRequiredPayload]="isRequiredPayload"></app-select-multiple>
+}

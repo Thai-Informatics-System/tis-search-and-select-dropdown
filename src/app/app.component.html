@@ -1,2 +1,40 @@
-<tis-client-side-dropdown></tis-client-side-dropdown>
-<tis-server-side-dropdown></tis-server-side-dropdown>
+<form [formGroup]="form">
+  <div style="margin-top: 15px; padding: 15px; display: grid; gap: 15px; grid-template-columns: repeat(2, minmax(0, 1fr));">
+    <tis-client-side-dropdown type="single" classes="tis-mat-form-field-mb-0" label="Client Side Single Selection"
+      nameKey="email" valueKey="id" [data]="options1" formControlName="singleClientSideSelect"
+      [config]="config.singleClientSideSelect" (selectedValueNamesUpdated)="setOptionFirstData($event)"></tis-client-side-dropdown>
+
+    <tis-client-side-dropdown type="multiple" classes="tis-mat-form-field-mb-0" label="Client Side Multiple Selection"
+      nameKey="title" valueKey="id" [(data)]="options2" formControlName="multipleClientSideSelect"
+      [config]="config.multipleClientSideSelect" (selectedValueNamesUpdated)="setOptionSecondData($event)"></tis-client-side-dropdown>
+    <!-- <tis-server-side-dropdown></tis-server-side-dropdown> -->
+  </div>
+  <div style="margin-top: 15px; padding: 15px; display: grid; gap: 15px; grid-template-columns: repeat(2, minmax(0, 1fr));">
+    <div>
+      {{options1Data | json}}
+    </div>
+
+    <div>
+      {{options2Data | json}}
+    </div>
+  </div>
+  <div style="padding: 15px; display: grid; gap: 15px; grid-template-columns: repeat(2, minmax(0, 1fr));">
+    <tis-server-side-dropdown type="single" classes="tis-mat-form-field-mb-0" label="Server Side Single Selection"
+      nameKey="title" valueKey="id" [(data)]="options3" formControlName="singleServerSideSelect"
+      [config]="config.singleServerSideSelect" (selectedValueNamesUpdated)="setOptionThirdData($event)"></tis-server-side-dropdown>
+
+    <tis-server-side-dropdown type="multiple" classes="tis-mat-form-field-mb-0" label="Server Side Multiple Selection"
+      nameKey="title" valueKey="id" [(data)]="options4" formControlName="multipleServerSideSelect"
+      [config]="config.multipleServerSideSelect" (selectedValueNamesUpdated)="setOptionFourthData($event)"></tis-server-side-dropdown>
+  </div>
+
+  <div style="margin-top: 15px; padding: 15px; display: grid; gap: 15px; grid-template-columns: repeat(2, minmax(0, 1fr));">
+    <div>
+      {{options3Data | json}}
+    </div>
+
+    <div>
+      {{options4Data | json}}
+    </div>
+  </div>
+</form>
