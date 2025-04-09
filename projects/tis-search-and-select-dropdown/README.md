@@ -2,6 +2,10 @@
 
 A powerful Angular Material-based dropdown component library by **Thai Informatic Systems Co. Ltd.**, offering flexible and customizable search-select dropdowns for both **client-side** and **server-side** data. It supports **single** and **multiple selection**, rich configuration options, hints, refresh support, and create-new actions — all built for modern Angular apps.
 
+[![npm version](https://img.shields.io/npm/v/@servicemind.tis/tis-search-and-select-dropdown)](https://www.npmjs.com/package/@servicemind.tis/tis-search-and-select-dropdown)
+[![npm downloads](https://img.shields.io/npm/dm/@servicemind.tis/tis-search-and-select-dropdown)](https://www.npmjs.com/package/@servicemind.tis/tis-search-and-select-dropdown)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ---
 
 ## 🚀 Features
@@ -19,7 +23,7 @@ A powerful Angular Material-based dropdown component library by **Thai Informati
 ## 📦 Installation
 
 ```bash
-npm install tis-search-and-select-dropdown
+npm install @servicemind.tis/tis-search-and-select-dropdown
 ```
 
 ### Required Peer Dependencies
@@ -35,7 +39,7 @@ npm install @angular/material @angular/cdk
 ### Module Setup
 
 ```ts
-import { TisSearchAndSelectDropdownModule } from 'tis-search-and-select-dropdown';
+import { TisSearchAndSelectDropdownModule } from '@servicemind.tis/tis-search-and-select-dropdown';
 
 @NgModule({
   imports: [TisSearchAndSelectDropdownModule]
@@ -199,7 +203,7 @@ MIT License © Thai Informatic Systems Co. Ltd.
 
 ## 📬 Support / Questions
 
-For bugs, suggestions, or feature requests, please open an issue on the [GitHub repository](https://github.com/Thai-Informatics/tis-search-and-select-dropdown) *(replace with actual link if available)*.
+For bugs, suggestions, or feature requests, please open an issue on the [GitHub repository](https://github.com/Thai-Informatics-System/tis-search-and-select-dropdown) *(replace with actual link if available)*.
 
 ---
 
