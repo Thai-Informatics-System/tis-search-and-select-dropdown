@@ -27,6 +27,6 @@ jobs:
         run: npm run build tis-search-and-select-dropdown
 
       - name: Publish to npm
-        run: npm publish dist/tis-search-and-select-dropdown --access public
+        run: npm publish ./dist/tis-search-and-select-dropdown --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
