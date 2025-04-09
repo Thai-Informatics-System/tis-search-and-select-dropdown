@@ -203,9 +203,8 @@ MIT License © Thai Informatic Systems Co. Ltd.
 
 ## 📬 Support / Questions
 
-For bugs, suggestions, or feature requests, please open an issue on the [GitHub repository](https://github.com/Thai-Informatics-System/tis-search-and-select-dropdown) *(replace with actual link if available)*.
+For bugs, suggestions, or feature requests, please open an issue on the [GitHub repository](https://github.com/Thai-Informatics-System/tis-search-and-select-dropdown).
 
 ---
 
-> Made with ❤️ by Thai Informatic Systems Co. Ltd.
-
+> Made with ❤️ by [Thai Informatic Systems Co. Ltd](https://tis.co.th/).
