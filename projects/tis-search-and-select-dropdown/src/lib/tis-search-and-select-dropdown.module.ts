@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { TisSearchAndSelectDropdownComponent } from './tis-search-and-select-dropdown.component';
 import { CommonModule } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -44,7 +43,7 @@ const uiImports = [
     SelectSingleComponent,
     SelectMultipleComponent
   ],
-  providers: [provideHttpClient()],
+  providers: [],
   imports: [
     CommonModule,
     FormsModule,

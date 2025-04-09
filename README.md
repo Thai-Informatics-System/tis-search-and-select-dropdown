@@ -49,6 +49,69 @@ export class MyFeatureModule {}
 
 ---
 
+## 🌐 HttpClient Configuration Required
+
+This library internally uses Angular's `HttpClient` for API calls (e.g., for server-side dropdowns). You **must provide `HttpClient`** in your app root or module setup.
+
+### ✅ In Standalone Applications
+In `main.ts`:
+
+```ts
+import { provideHttpClient } from '@angular/common/http';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient() // use with interceptors below if needed
+  ]
+});
+```
+
+### ✅ In NgModules
+
+```ts
+import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+@NgModule({
+  imports: [
+    HttpClientModule
+  ]
+})
+export class AppModule {}
+```
+
+### 🔐 With Interceptors (Optional)
+
+If using interceptors in a standalone app:
+
+```ts
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { httpInterceptorProviders } from './interceptors';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    httpInterceptorProviders,
+    provideHttpClient(withInterceptorsFromDi())
+  ]
+});
+```
+
+In traditional NgModules:
+
+```ts
+providers: [
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: MyInterceptor,
+    multi: true
+  }
+]
+```
+
+---
+
 ## 🧠 Components
 
 ### `<tis-client-side-dropdown>`
@@ -195,9 +258,17 @@ Custom styles can be added using the `classes` input.
 
 ---
 
-## 📄 License
+## 🚀 Publishing to npm
 
-MIT License © Thai Informatic Systems Co. Ltd.
+To publish a new version of the package, tag your commit and push the tag:
+
+```bash
+git tag v1.0.2
+git push origin v1.0.2
+```
+
+
+MIT License © [Thai Informatic Systems Co. Ltd](https://tis.co.th/).
 
 ---
 
@@ -208,4 +279,3 @@ For bugs, suggestions, or feature requests, please open an issue on the [GitHub 
 ---
 
 > Made with ❤️ by [Thai Informatic Systems Co. Ltd](https://tis.co.th/).
-

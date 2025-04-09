@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
 import { ClientSideSingleSelectionConfig, SelectedFilterDisplayValuesType, SelectedFilterDisplayValueType, TisSearchAndSelectDropdownModule } from 'tis-search-and-select-dropdown';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, ReactiveFormsModule, TisSearchAndSelectDropdownModule],
+  imports: [CommonModule, ReactiveFormsModule, TisSearchAndSelectDropdownModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
