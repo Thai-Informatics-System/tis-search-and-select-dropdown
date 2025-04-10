@@ -34,6 +34,7 @@ export class SingleSelectComponent {
   @Input() initialData: any[] = [];
   @Input() appearance: MatFormFieldAppearance = "outline"  // 'legacy' | 'standard' | 'fill' | 'outline';
   @Input() classes = "";
+  @Input() panelClass = "";
   @Input() refetch = true;
   @Input() isRequiredPayload = false;
   @Input() validationMessages: ValidationMessages[] = [];
@@ -347,7 +348,7 @@ export class SingleSelectComponent {
 
   setCustomClass() {
     // set custom panel class
-    const panelClass = 'tis-dropdown-panel tis-client-side-single-select-panel';
+    const panelClass = `tis-dropdown-panel tis-client-side-single-select-panel ${this.panelClass}`;
     if (this.matSelect.panelClass) {
       if (Array.isArray(this.matSelect.panelClass)) {
         this.matSelect.panelClass.push(panelClass);

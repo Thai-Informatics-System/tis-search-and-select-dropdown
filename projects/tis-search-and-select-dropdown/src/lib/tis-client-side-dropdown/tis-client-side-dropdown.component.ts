@@ -34,6 +34,7 @@ export class TisClientSideDropdownComponent {
   @Input() isRequiredPayload = false;
   @Input() appearance: MatFormFieldAppearance = "outline"  // 'legacy' | 'standard' | 'fill' | 'outline';
   @Input() classes = "";
+  @Input() panelClass = "";
   @Input() validationMessages: ValidationMessages[] = [];
   @Input({ required: true }) config!: ClientSideSingleSelectionConfig;
   @Input() loading: boolean = false;

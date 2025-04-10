@@ -33,6 +33,7 @@ export class SelectMultipleComponent {
     @Input() initialData: any[] = [];
     @Input() appearance: MatFormFieldAppearance = "outline"  // 'legacy' | 'standard' | 'fill' | 'outline';
     @Input() classes = "";
+    @Input() panelClass = "";
     @Input() refetch = false;
     @Input() isRequiredPayload = false;
     @Input() validationMessages: ValidationMessages[] = [];
@@ -496,7 +497,7 @@ export class SelectMultipleComponent {
 
     setCustomClass() {
         // set custom panel class
-        const panelClass = 'tis-dropdown-panel tis-server-side-multiple-select-panel';
+        const panelClass = `tis-dropdown-panel tis-server-side-multiple-select-panel ${this.panelClass}`;
         if (this.matSelect.panelClass) {
             if (Array.isArray(this.matSelect.panelClass)) {
                 this.matSelect.panelClass.push(panelClass);

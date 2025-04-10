@@ -34,6 +34,7 @@ export class MultipleSelectComponent {
   @Input() initialData: any[] = [];
   @Input() appearance: MatFormFieldAppearance = "outline"  // 'legacy' | 'standard' | 'fill' | 'outline';
   @Input() classes = "";
+  @Input() panelClass = "";
   @Input() refetch = true;
   @Input() isRequiredPayload = false;
   @Input() validationMessages: ValidationMessages[] = [];
@@ -443,7 +444,7 @@ export class MultipleSelectComponent {
 
   setCustomClass() {
     // set custom panel class
-    const panelClass = 'tis-dropdown-panel tis-client-side-multiple-select-panel';
+    const panelClass = `tis-dropdown-panel tis-client-side-multiple-select-panel ${this.panelClass}`;
     if (this.matSelect.panelClass) {
       if (Array.isArray(this.matSelect.panelClass)) {
         this.matSelect.panelClass.push(panelClass);

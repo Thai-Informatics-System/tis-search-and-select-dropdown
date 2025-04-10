@@ -7,7 +7,7 @@
   top: 0;
   width: 100%;
   border-bottom: 1px solid #cccccc;
-  background: white;
+  background: var(--tis-dropdown-panel-bg-color, white);
   z-index: 100;
 }
 

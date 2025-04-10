@@ -39,7 +39,8 @@
                 </mat-hint>
             }
         </mat-form-field>
-        <i class="fas fa-spinner fa-spin" style="position: absolute; top: 20px; right: 13px" *ngIf="loading"></i>
+        <mat-progress-spinner class="tis-dropdown-loader" mode="indeterminate" style="position: absolute; top: 15px; right: 9px;" [diameter]="25" *ngIf="loading"></mat-progress-spinner>
+        <!-- <i class="fas fa-spinner fa-spin" style="position: absolute; top: 20px; right: 13px" *ngIf="loading"></i> -->
     </li>
     <li style="list-style: none; width: 40px; padding: 0px; margin: 0px; margin-left: 5px; margin-bottom: 15px; padding-bottom: 5px;" *ngIf="config?.isEnableRefreshMode">
         <mat-icon style="cursor: pointer; position: relative !important" (click)="config?.clickRefreshBtn ? config?.clickRefreshBtn() : refreshData();" *ngIf="!isRefreshing">autorenew</mat-icon>

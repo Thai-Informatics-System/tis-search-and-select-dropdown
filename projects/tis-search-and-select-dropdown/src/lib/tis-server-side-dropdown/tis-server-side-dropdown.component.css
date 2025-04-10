@@ -1,6 +1,10 @@
 ::ng-deep .tis-dropdown-panel {
-    background-color: var(--tis-dropdown-panel-background-color, #ffffff) !important;
+    background-color: var(--tis-dropdown-panel-bg-color, #ffffff) !important;
     /* background-color: white !important; */
+}
+
+::ng-deep .tis-dropdown-panel .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple) {
+    background-color: var(--tis-option-selected-state-layer-color, var(--mat-sys-secondary-container));
 }
 
 /* Scrollbar styles for WebKit inside .my-scrollable-div */
@@ -25,4 +29,8 @@
     box-shadow: inset 0 0 5px grey;
     border-radius: 10px !important;
     /* background: red !important; */
+}
+
+.tis-dropdown-loader{
+    --mdc-circular-progress-active-indicator-color: var(--tis-dropdown-loader-color, gray) !important;
 }
