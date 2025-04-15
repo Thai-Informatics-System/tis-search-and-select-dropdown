@@ -1,3 +1,7 @@
 ::ng-deep .tis-server-side-single-select .mdc-notched-outline__notch {
     border-right: 0px !important;
 }
+
+::ng-deep .tis-server-side-single-select .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mdc-notched-outline .mdc-notched-outline__notch {
+    border-right: 0px !important;
+}
