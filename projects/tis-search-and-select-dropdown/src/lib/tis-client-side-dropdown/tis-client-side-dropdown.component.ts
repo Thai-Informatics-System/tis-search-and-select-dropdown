@@ -6,6 +6,15 @@ import { SelectedFilterDisplayValuesType } from '../interfaces/tis-selection-con
 import { ValidationMessages } from '../interfaces/validation-messages.type';
 import type { MatFormFieldAppearance } from '@angular/material/form-field';
 
+const generateRandomString = (length: number): string => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
 @Component({
   selector: 'tis-client-side-dropdown',
   standalone: false,
@@ -35,6 +44,7 @@ export class TisClientSideDropdownComponent {
   @Input() appearance: MatFormFieldAppearance = "outline"  // 'legacy' | 'standard' | 'fill' | 'outline';
   @Input() classes = "";
   @Input() panelClass = "";
+  @Input() customId: string = generateRandomString(10);
   @Input() validationMessages: ValidationMessages[] = [];
   @Input({ required: true }) config!: ClientSideSingleSelectionConfig;
   @Input() loading: boolean = false;

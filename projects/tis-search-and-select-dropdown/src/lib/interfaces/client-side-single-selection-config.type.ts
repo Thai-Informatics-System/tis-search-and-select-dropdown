@@ -16,6 +16,18 @@ interface AdditionalName {
     separators: string[] | null,
 }
 
+interface ClassCondition {
+    key: string | number | null,
+    class: string | null,
+    value: string | null,
+    isTranslation: boolean | null,
+}
+
+interface Badge {
+    key: string | null,
+    classConditionList: ClassCondition[] | null,
+}
+
 export interface ClientSideSingleSelectionConfig {
     uri: string | null,
     method: string | null,
@@ -32,4 +44,5 @@ export interface ClientSideSingleSelectionConfig {
     noEntriesFoundLabel: string | null,
     additionalName: AdditionalName | null,
     dataValueKey: string | null,
+    badge: Badge | null,
 }

@@ -1,5 +1,5 @@
 <ul class="tis-dropdown {{classes}}" style="width: 100%; display: inline-flex; align-items: center; padding: 0px; margin: 0px;">
-    <li style="--list-width: {{config?.isEnableRefreshMode? '40px': '0px'}}; list-style: none; position: relative; min-width: calc(100% - var(--list-width));">
+    <li [attr.id]="customId" style="--list-width: {{config?.isEnableRefreshMode? '40px': '0px'}}; list-style: none; position: relative; min-width: calc(100% - var(--list-width));">
         <mat-form-field class="tis-server-side-single-select" style="width: 100%;" [appearance]="appearance">
             <mat-label>{{label}}</mat-label>
             <mat-select [formControl]="listCtrl" #singleSelect (openedChange)="onOpenedChange($event)">
@@ -11,9 +11,14 @@
                 @if (config?.isAllOption && searchFilterCtrl.value == '') {
                     <mat-option value="*">All</mat-option>
                 }
-                <ng-container *ngFor="let option of options | async">
-                    <mat-option *ngIf="option && option[valueKey]" [value]="option[valueKey]" matTooltipPosition="right" [matTooltip]="option[nameKey] + '' + displayAdditional(option)">
+                <ng-container *ngFor="let option of options | async; let i = index;">
+                    <mat-option style="position: relative !important;" [style.padding-right]="setPadding(option[valueKey]+'_'+i)" *ngIf="option && option[valueKey]" [value]="option[valueKey]" matTooltipPosition="right" [matTooltip]="option[nameKey] + '' + displayAdditional(option)">
                         {{option[nameKey]}} <span *ngIf="(additionalNameKeys?.length || 0) > 0">{{displayAdditional(option)}}</span>
+                        <span *ngIf="badgeKey && badgeKey != '' && option[badgeKey]?.length" id="badge_{{option[valueKey]}}_{{i}}" style="display: flex; gap: 5px; justify-content: center; align-items: center; position: absolute; right: 5px; top: 10px;">
+                            @for(r of option[badgeKey]; track r; let ndx = $index; let last = $last){
+                                <span *ngIf="getBadge(r)" class="tis-badge-sm tis-badge-round {{getBadge(r)?.class}}">{{getBadge(r)?.value}}</span>
+                            }
+                        </span>
                     </mat-option>
                 </ng-container>
             </mat-select>

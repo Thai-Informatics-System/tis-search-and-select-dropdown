@@ -2,3 +2,34 @@
 //     --tis-dropdown-panel-bg-color: yellow !important;
 //     --tis-option-selected-state-layer-color: gray !important;
 // }
+
+::ng-deep .tis-badge-outline-primary {
+    color: #3838a2 !important;
+    background-color: #e7e7f4 !important;
+    border: 1px solid #c3c3e3 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 4px 8px !important;
+    white-space: nowrap !important;
+}
+
+::ng-deep .tis-badge-outline-success {
+    color: #4caf50 !important;
+    background-color: #ecfdf4 !important;
+    border: 1px solid #b9f6cb !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 4px 8px !important;
+    white-space: nowrap !important;
+}
+
+::ng-deep .tis-badge-round {
+    border-radius: 50px !important;
+}
+
+::ng-deep .tis-badge-sm {
+    font-size: 14px !important;
+    line-height: 18px !important;
+}

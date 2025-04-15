@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ClientSideSingleSelectionConfig, SelectedFilterDisplayValuesType, SelectedFilterDisplayValueType, TisSearchAndSelectDropdownModule } from 'tis-search-and-select-dropdown';
+import { ClientSideMultipleSelectionConfig, ClientSideSingleSelectionConfig, SelectedFilterDisplayValuesType, SelectedFilterDisplayValueType, ServerSideMultipleSelectionConfig, ServerSideSingleSelectionConfig, TisSearchAndSelectDropdownModule } from 'tis-search-and-select-dropdown';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +24,7 @@ export class AppComponent {
   options2: any[] = [];
   options3: any[] = [];
   options4: any[] = [];
+  options5: any[] = [];
 
   options1Data: any;
   options2Data: any;
@@ -44,7 +45,7 @@ export class AppComponent {
         msg: 'This is hint for example'
       }
     },
-    multipleClientSideSelect: <ClientSideSingleSelectionConfig>{
+    multipleClientSideSelect: <ClientSideMultipleSelectionConfig>{
       uri: 'https://mocki.io/v1/32ff3217-e809-442c-8e63-b4b0a8416325',
       method: 'GET',
       limit: 100,
@@ -57,7 +58,7 @@ export class AppComponent {
         msg: 'This is note for example'
       }
     },
-    singleServerSideSelect: <ClientSideSingleSelectionConfig>{
+    singleServerSideSelect: <ServerSideSingleSelectionConfig>{
       uri: 'https://mocki.io/v1/32ff3217-e809-442c-8e63-b4b0a8416325',
       method: 'GET',
       limit: 100,
@@ -71,7 +72,7 @@ export class AppComponent {
         msg: 'This is note for example with customize color'
       }
     },
-    multipleServerSideSelect: <ClientSideSingleSelectionConfig>{
+    multipleServerSideSelect: <ServerSideMultipleSelectionConfig>{
       uri: 'https://mocki.io/v1/32ff3217-e809-442c-8e63-b4b0a8416325',
       method: 'GET',
       limit: 100,
@@ -84,6 +85,23 @@ export class AppComponent {
         color: 'green',
         clickBtn: this.createNew.bind(this)
       }
+    },
+    singleClientSideSelectWithTags: <ClientSideSingleSelectionConfig>{
+      uri: 'https://mocki.io/v1/307d639d-b36e-4507-ba02-fc2dfe39fb25',
+      method: 'GET',
+      limit: 100,
+      setFirstOption: false,
+      isSearchable: true,
+      isAllOption: false,
+      isEnableRefreshMode: false,
+      badge: {
+        key: 'residentTypes',
+        classConditionList: [
+          { key: 1, value: "Owner", class: 'tis-badge-outline-primary' },
+          { key: 2, value: "Resident", class: 'tis-badge-outline-success' },
+          { key: 3, value: "Tenant", class: 'tis-badge-outline-accent' },
+        ]
+      }
     }
   }
 
@@ -93,6 +111,7 @@ export class AppComponent {
       multipleClientSideSelect: new FormControl('*'),
       singleServerSideSelect: new FormControl('*'),
       multipleServerSideSelect: new FormControl(null),
+      singleClientSideSelectWithTags: new FormControl(null),
     });
   }
 

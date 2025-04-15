@@ -35,4 +35,10 @@
       {{options4Data | json}}
     </div>
   </div>
+
+  <div style="padding: 15px; display: grid; gap: 15px; grid-template-columns: repeat(2, minmax(0, 1fr));">
+    <tis-client-side-dropdown type="multiple" classes="custom-class" panelClass="custom-panel" label="Server Side Single Selection With Tags"
+      nameKey="fullName" valueKey="id" [(data)]="options5" formControlName="singleClientSideSelectWithTags"
+      [config]="config.singleClientSideSelectWithTags"></tis-client-side-dropdown>
+  </div>
 </form>

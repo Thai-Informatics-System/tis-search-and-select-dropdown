@@ -34,6 +34,7 @@ export class SelectMultipleComponent {
     @Input() appearance: MatFormFieldAppearance = "outline"  // 'legacy' | 'standard' | 'fill' | 'outline';
     @Input() classes = "";
     @Input() panelClass = "";
+    @Input() customId = "";
     @Input() refetch = false;
     @Input() isRequiredPayload = false;
     @Input() validationMessages: ValidationMessages[] = [];
@@ -49,6 +50,7 @@ export class SelectMultipleComponent {
 
     additionalNameKeys: string[] = [];
     separatorType: string[] = ['(,)'];
+    badgeKey!: string;
 
     selectedOptions: any[] = [];
     initialOptions: any[] = [];
@@ -100,6 +102,7 @@ export class SelectMultipleComponent {
         this.listCtrl.valueChanges
             .pipe(takeUntil(this._onDestroy))
             .subscribe((value: any) => {
+                this.setValueInHtml(value);
                 if (!this.isSameArray(this.selectedOptions, value || [])) {
                     this.onSelectionChange(value || []);
                 }
@@ -140,6 +143,7 @@ export class SelectMultipleComponent {
                     this.selectedOptions = [...new Set(this.selectedOptions || [])];
                 }
             }
+            this.setValueInHtml(value ?? null);
             this.prepareData();
         }
         if (changes['refetch'] && changes['refetch'].currentValue == true) {
@@ -151,12 +155,17 @@ export class SelectMultipleComponent {
             if (this.config?.hint && !this.config?.hint?.color) {
                 this.config.hint.color = '#f44236';
             }
+
             if (this.config?.createNew && !this.config?.createNew?.color) {
                 this.config.createNew.color = '#36834f';
             }
 
             if (this.config?.noEntriesFoundLabel) {
                 this.noEntriesFoundLabel = this.config.noEntriesFoundLabel;
+            }
+
+            if(this.config?.badge?.key){
+                this.badgeKey = this.config?.badge?.key;
             }
 
             if (this.config?.additionalName?.keys) {
@@ -253,6 +262,55 @@ export class SelectMultipleComponent {
         }
         else {
             this.listCtrl.enable();
+        }
+    }
+
+    setValueInHtml(value: any) {
+        if (Array.isArray(value)) {
+            let selectedValues = this.data.filter(v => value.includes(v[this.valueKey]));
+
+            if (selectedValues?.length) {
+                let element: any = document?.getElementById(this.customId);
+                let selectedElements: HTMLCollectionOf<HTMLElement> = element?.getElementsByClassName('mat-mdc-select-value') as HTMLCollectionOf<HTMLElement>;
+
+                // Ensure that we are working with the first element in the collection
+                if (selectedElements && selectedElements.length > 0) {
+                    selectedElements[0].style.position = `relative`;
+                    let htmlStr = ``
+                    htmlStr += `<span class="mat-mdc-select-value-text" style=""><span class="mat-mdc-select-min-line">${selectedValues?.map(item => item[this.nameKey])?.join(', ')}`;
+                    let tags: any = [];
+
+                    selectedValues?.map(item => {
+                        if (item[this.badgeKey]?.length) {
+                            tags = [...tags, ...item[this.badgeKey]];
+                        }
+                    });
+
+                    tags = [...new Set(tags)];
+
+                    if (this.badgeKey && this.badgeKey != '' && tags?.length) {
+                        htmlStr += `<span id="selected_badge_${selectedValues?.map(item => item[this.nameKey])?.join('_')}" style="display: flex; gap: 5px; justify-content: center; align-items: center; position: absolute; right: 0px; top: 0px; background-color: white; padding-left: 5px; padding-right: 5px;">`;
+                        tags?.map((badge: any) => {
+                            if (this.getBadge(badge)) {
+                                htmlStr += `<span class="tis-badge-sm tis-badge-round ${this.getBadge(badge)?.class}" style="font-size: 12px !important; padding: 2px 5px !important; line-height: 16px !important;">${this.getBadge(badge)?.value}</span>`;
+                            }
+                        });
+                        htmlStr += `</span>`;
+                    }
+                    htmlStr += `</span></span>`;
+
+                    selectedElements[0].innerHTML = htmlStr;
+                }
+            }
+            else {
+                let element: any = document?.getElementById(this.customId);
+                let selectedElements: HTMLCollectionOf<HTMLElement> = element?.getElementsByClassName('mat-mdc-select-value') as HTMLCollectionOf<HTMLElement>;
+
+                // Ensure that we are working with the first element in the collection
+                if (selectedElements && selectedElements.length > 0) {
+                    selectedElements[0].innerHTML = '';
+                }
+            }
         }
     }
 
@@ -493,6 +551,35 @@ export class SelectMultipleComponent {
         else {
             return this.http.get(`${url}`);
         }
+    }
+
+    getBadge(key: number | string): any {
+        if (this.config?.badge?.classConditionList?.length) {
+            let selectedClassCondition = this.config?.badge?.classConditionList?.find(cc => cc.key == key);
+            if (selectedClassCondition) {
+                return selectedClassCondition;
+            }
+            else {
+                return null;
+            }
+        }
+        else {
+            return null;
+        }
+    }
+
+    setPadding(key: string | number) {
+        let id = `badge_${key}`;
+        // Get the element by ID
+        const element = document.getElementById(id);
+
+        // Get the width of the element
+        const width = element?.offsetWidth;
+
+        if (width) {
+            return `${width + 10}px`;
+        }
+        return `16px`;
     }
 
     setCustomClass() {

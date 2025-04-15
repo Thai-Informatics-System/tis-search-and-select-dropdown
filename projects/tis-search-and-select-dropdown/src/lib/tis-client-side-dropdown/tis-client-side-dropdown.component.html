@@ -1,12 +1,12 @@
 @if(type == 'single'){
-    <app-single-select [appearance]="appearance" [classes]="classes" [panelClass]="panelClass" [label]="label" [placeholder]="placeholder"
+    <app-single-select [customId]="customId" [appearance]="appearance" [classes]="classes" [panelClass]="panelClass" [label]="label" [placeholder]="placeholder"
         [formControl]="fc" [isRequired]="isRequired" [nameKey]="nameKey" [valueKey]="valueKey" [initialData]="data"
         (initialDataChange)="setData($event)" [validationMessages]="validationMessages" [config]="config"
         [(loading)]="loading" [isRefreshing]="isRefreshing" (loadingChange)="onLoadingChange($event)" [(refetch)]="toggle"
         [isRequiredPayload]="isRequiredPayload"></app-single-select>
 }
 @else if(type == 'multiple'){
-    <app-multiple-select [appearance]="appearance" [classes]="classes" [panelClass]="panelClass" [label]="label" [placeholder]="placeholder"
+    <app-multiple-select [customId]="customId" [appearance]="appearance" [classes]="classes" [panelClass]="panelClass" [label]="label" [placeholder]="placeholder"
         [formControl]="fc" [isRequired]="isRequired" [nameKey]="nameKey" [valueKey]="valueKey" [initialData]="data"
         (initialDataChange)="setData($event)" [validationMessages]="validationMessages" [config]="config"
         [(loading)]="loading" [isRefreshing]="isRefreshing" (loadingChange)="onLoadingChange($event)" [(refetch)]="toggle"

@@ -4,6 +4,15 @@ import type { MatFormFieldAppearance } from '@angular/material/form-field';
 import { Subject, takeUntil } from 'rxjs';
 import type { SelectedFilterDisplayValuesType, ServerSideSingleSelectionConfig, ValidationMessages } from '../interfaces';
 
+const generateRandomString = (length: number): string => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
 @Component({
   selector: 'tis-server-side-dropdown',
   standalone: false,
@@ -33,6 +42,7 @@ export class TisServerSideDropdownComponent {
   @Input() appearance: MatFormFieldAppearance = "outline"  // 'legacy' | 'standard' | 'fill' | 'outline';
   @Input() classes = "";
   @Input() panelClass = "";
+  @Input() customId: string = generateRandomString(10);
   @Input() validationMessages: ValidationMessages[] = [];
   @Input({ required: true }) config!: ServerSideSingleSelectionConfig;
   @Input() loading: boolean = false;
