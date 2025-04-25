@@ -3,8 +3,8 @@
 }
 
 .mat-select-search-inner {
-  position: absolute;
-  top: 0;
+  position: sticky;
+  top: -10px;
   width: 100%;
   border-bottom: 1px solid #cccccc;
   background: var(--tis-dropdown-panel-bg-color, white);

@@ -556,7 +556,7 @@ export class MultipleSelectComponent {
 
     if (parent && child) {
       const parentWidth = parent.offsetWidth;
-      child.style.width = `${parentWidth}px`;
+      child.style.width = `${parentWidth - 6}px`;
     }
   }
 
