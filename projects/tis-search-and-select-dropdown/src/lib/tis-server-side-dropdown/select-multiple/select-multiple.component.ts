@@ -363,11 +363,14 @@ export class SelectMultipleComponent {
                 let value = ['*', ...opIds];
                 this.selectedOptions.push(...value);
             }
-            else {
+            else if(this.config.isAllOption == true){
                 let opIds = this.data?.length ? this.data?.map(r => r[this.valueKey]) : [];
                 if (this.isSameArray(opIds, value || [])) {
                     addedValues.push('*');
                 }
+                this.selectedOptions.push(...addedValues);
+            }
+            else{
                 this.selectedOptions.push(...addedValues);
             }
         }
