@@ -241,6 +241,17 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
         if (opened) {
           // note: this is hacky, but currently there is no better way to do this
           let element: any = this.searchSelectInput.nativeElement;
+          // Delay to allow Angular Material animations to complete
+          setTimeout(() => {
+            // console.log("==== auto focused ===", element);
+            const input: HTMLInputElement | null = element.querySelector('input');
+            if (input) {
+              input.focus();
+              // console.log("==== auto focused ===", input);
+            } else {
+              // console.warn("Input element not found inside container");
+            }
+          }, 100);
           let overlayElement: any;
           while (element = element.parentElement) {
             if (element.classList.contains('cdk-overlay-pane')) {

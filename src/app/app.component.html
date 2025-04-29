@@ -1,8 +1,8 @@
 <form [formGroup]="form">
   <div style="margin-top: 15px; padding: 15px; display: grid; gap: 15px; grid-template-columns: repeat(2, minmax(0, 1fr));">
     <tis-client-side-dropdown type="single" classes="custom-class" panelClass="custom-panel" label="Client Side Single Selection"
-      nameKey="email" valueKey="id" [data]="options1" formControlName="singleClientSideSelect"
-      [config]="config.singleClientSideSelect" (selectedValueNamesUpdated)="setOptionFirstData($event)"></tis-client-side-dropdown>
+      nameKey="houseNumber" valueKey="id" [data]="options1" formControlName="singleClientSideSelect"
+      [config]="config.unitId" (selectedValueNamesUpdated)="setOptionFirstData($event)"></tis-client-side-dropdown>
 
     <tis-client-side-dropdown type="multiple" classes="custom-class" panelClass="custom-panel" label="Client Side Multiple Selection"
       nameKey="title" valueKey="id" [(data)]="options2" formControlName="multipleClientSideSelect"

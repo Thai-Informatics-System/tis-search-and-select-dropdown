@@ -102,7 +102,9 @@ export class SingleSelectComponent {
     this.listCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe((value) => {
-        this.setValueInHtml(value);
+        if(this.badgeKey){
+          this.setValueInHtml(value);
+        }
         this.onInputChange(value);
       });
 
@@ -131,7 +133,9 @@ export class SingleSelectComponent {
       this.initialData = changes['initialData'].currentValue;
       // console.log("=== app-single-select :: ngOnChanges['initialData'] ===", this.initialData);
       this.data = this.initialData;
-      this.setValueInHtml(this.listCtrl?.getRawValue() ?? null);
+      if(this.badgeKey){
+        this.setValueInHtml(this.listCtrl?.getRawValue() ?? null);
+      }
       this.prepareData();
     }
     if (changes['refetch'] && changes['refetch'].currentValue == true) {

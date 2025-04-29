@@ -100,7 +100,9 @@ export class MultipleSelectComponent {
     this.listCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe((value: any) => {
-        this.setValueInHtml(value);
+        if(this.badgeKey){
+          this.setValueInHtml(value);
+        }
         if (!this.isSameArray(this.selectedOptions, value || [])) {
           this.onSelectionChange(value || []);
         }
@@ -140,7 +142,9 @@ export class MultipleSelectComponent {
           this.selectedOptions = [...new Set(this.selectedOptions || [])];
         }
       }
-      this.setValueInHtml(value ?? null);
+      if(this.badgeKey){
+        this.setValueInHtml(value ?? null);
+      }
       this.prepareData();
     }
     if (changes['refetch'] && changes['refetch'].currentValue == true) {
