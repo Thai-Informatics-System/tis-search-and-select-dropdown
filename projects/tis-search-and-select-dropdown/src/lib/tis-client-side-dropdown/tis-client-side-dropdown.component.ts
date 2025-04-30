@@ -97,9 +97,11 @@ export class TisClientSideDropdownComponent {
   ngOnChanges(changes: SimpleChanges) {
     // console.log("=== data ===", changes);
     if (changes['disabled']) {
+      // console.log("=== setDisabledState :: ngOnChanges['disabled'] ===", this.disabled);
       this.disabled = changes['disabled'].currentValue;
-      this.setDisabledState(this.disabled);
-      // console.log("=== tis-select-client-side :: ngOnChanges['config'] ===", this.config);
+      setTimeout(() => {
+        this.setDisabledState(this.disabled);
+      }, 100);
     }
 
     if (changes['payload']) {
@@ -187,6 +189,8 @@ export class TisClientSideDropdownComponent {
 
   setDisabledState(isDisabled: boolean): void {
     this.disable = isDisabled;
+    // console.log("=== setDisabledState ===", isDisabled);
+    
     if (isDisabled) {
       this.fc.disable({ emitEvent: false });
     } else {

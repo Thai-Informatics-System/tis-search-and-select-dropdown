@@ -96,7 +96,9 @@ export class TisServerSideDropdownComponent {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['disabled']) {
       this.disabled = changes['disabled'].currentValue;
-      this.setDisabledState(this.disabled);
+      setTimeout(() => {
+        this.setDisabledState(this.disabled);
+      }, 100);
     }
 
     if (changes['payload']) {

@@ -1709,6 +1709,11 @@ export class AppComponent {
       multipleServerSideSelect: new FormControl(null),
       singleClientSideSelectWithTags: new FormControl(null),
     });
+
+    // this.form.get('singleClientSideSelect')?.disable();
+    // setTimeout(() => {
+    //   this.form.get('singleClientSideSelect')?.enable();
+    // }, 3000);
   }
 
   setOptionFirstData(values: SelectedFilterDisplayValueType | SelectedFilterDisplayValuesType) {
