@@ -309,6 +309,8 @@ export class SelectSingleComponent {
 
       let filter: any = this.config?.filter ?? {};
 
+      includedIds = includedIds?.filter(id => id && id != undefined && id != null && id != '');
+
       if (includedIds?.length) {
         filter['includedIds'] = includedIds;
       }
