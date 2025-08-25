@@ -12,7 +12,7 @@
                     <mat-option value="*">All</mat-option>
                 }
                 <ng-container *ngFor="let option of options | async; let i = index;">
-                    <mat-option style="position: relative !important;" [style.padding-right]="setPadding(option[valueKey]+'_'+i)" *ngIf="option && option[valueKey]" [value]="option[valueKey]" matTooltipPosition="right" [matTooltip]="option[nameKey] + '' + displayAdditional(option)">
+                    <mat-option style="position: relative !important;" [style.padding-right]="setPadding(option[valueKey]+'_'+i)" *ngIf="option && option[valueKey]" [value]="option[valueKey]" matTooltipPosition="right" [matTooltip]="option[nameKey] + '' + displayAdditional(option)" [matTooltipShowDelay]="100" matTooltipTouchGestures="off">
                         {{option[nameKey]}} <span *ngIf="(additionalNameKeys?.length || 0) > 0">{{displayAdditional(option)}}</span>
                         <span *ngIf="badgeKey && badgeKey != '' && option[badgeKey]?.length" id="badge_{{option[valueKey]}}_{{i}}" style="display: flex; gap: 5px; justify-content: center; align-items: center; position: absolute; right: 5px; top: 10px;">
                             @for(r of option[badgeKey]; track r; let ndx = $index; let last = $last){
