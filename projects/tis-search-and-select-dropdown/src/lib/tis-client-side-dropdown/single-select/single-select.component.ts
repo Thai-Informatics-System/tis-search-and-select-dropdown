@@ -373,8 +373,24 @@ export class SingleSelectComponent {
       search = search.toLowerCase();
     }
     // filter the data
+
+    // this.options.next(
+    //   this.data?.filter(d => d && Object.keys(d).length > 0).filter(d => d[this.nameKey].toLowerCase().indexOf(search) > -1)
+    // );
+
     this.options.next(
-      this.data?.filter(d => d && Object.keys(d).length > 0).filter(d => d[this.nameKey].toLowerCase().indexOf(search) > -1)
+      this.data?.filter(d => {
+        if (!d || Object.keys(d).length === 0) return false;
+        // Combine main nameKey and additionalNameKeys values into a single string
+        let searchFields = [d[this.nameKey]];
+        this.additionalNameKeys?.forEach(key => {
+          if (d[key]) searchFields.push(d[key]);
+        });
+        // Check if any field contains the search string
+        return searchFields.some(field => 
+          typeof field === 'string' && field.toLowerCase().includes(search)
+        );
+      })
     );
   }
 

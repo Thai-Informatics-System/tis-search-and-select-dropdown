@@ -471,14 +471,30 @@ export class MultipleSelectComponent {
     let data: any[] = this.data?.length ? JSON.parse(JSON.stringify(this.data)) : [];
 
     data = data?.filter(d => d && Object.keys(d).length > 0);
+
+    // data = data.map(d => {
+    //   if (d[this.nameKey]?.toLowerCase()?.indexOf(search) > -1) {
+    //     d.isHidden = false;
+    //   }
+    //   else {
+    //     d.isHidden = true;
+    //   }
+
+    //   return d;
+    // });
+    
     data = data.map(d => {
-      if (d[this.nameKey]?.toLowerCase()?.indexOf(search) > -1) {
-        d.isHidden = false;
-      }
-      else {
-        d.isHidden = true;
+      // Check main nameKey
+      let matches = d[this.nameKey]?.toLowerCase()?.indexOf(search) > -1;
+
+      // Check additionalNameKeys
+      if (!matches && Array.isArray(this.additionalNameKeys) && this.additionalNameKeys.length) {
+      matches = this.additionalNameKeys.some(key => 
+        d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
+      );
       }
 
+      d.isHidden = !matches;
       return d;
     });
 
