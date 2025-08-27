@@ -51,6 +51,7 @@ export class SingleSelectComponent {
 
   additionalNameKeys: string[] = [];
   separatorType: string[] = ['(,)'];
+  filterNameKeys: string[] = [];
   badgeKey!: string;
 
   isOpenSelection: boolean = false;
@@ -166,6 +167,10 @@ export class SingleSelectComponent {
 
       if (this.config?.additionalName?.separators) {
         this.separatorType = this.config?.additionalName?.separators;
+      }
+
+      if (this.config?.filterNameKeys) {
+        this.filterNameKeys = this.config?.filterNameKeys || [];
       }
 
       // console.log("=== app-single-select :: ngOnChanges['config'] ===", this.config);
@@ -384,6 +389,9 @@ export class SingleSelectComponent {
         // Combine main nameKey and additionalNameKeys values into a single string
         let searchFields = [d[this.nameKey]];
         this.additionalNameKeys?.forEach(key => {
+          if (d[key]) searchFields.push(d[key]);
+        });
+        this.filterNameKeys?.forEach(key => {
           if (d[key]) searchFields.push(d[key]);
         });
         // Check if any field contains the search string

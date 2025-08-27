@@ -51,6 +51,7 @@ export class MultipleSelectComponent {
 
   additionalNameKeys: string[] = [];
   separatorType: string[] = ['(,)'];
+  filterNameKeys: string[] = [];
   badgeKey!: string;
 
   selectedOptions: any[] = [];
@@ -175,6 +176,10 @@ export class MultipleSelectComponent {
 
       if (this.config?.additionalName?.separators) {
         this.separatorType = this.config?.additionalName?.separators;
+      }
+
+      if (this.config?.filterNameKeys) {
+        this.filterNameKeys = this.config?.filterNameKeys || [];
       }
 
       this.getData(null, false, true);
@@ -489,9 +494,16 @@ export class MultipleSelectComponent {
 
       // Check additionalNameKeys
       if (!matches && Array.isArray(this.additionalNameKeys) && this.additionalNameKeys.length) {
-      matches = this.additionalNameKeys.some(key => 
-        d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
-      );
+        matches = this.additionalNameKeys.some(key => 
+          d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
+        );
+      }
+
+      // Check filterNameKeys
+      if (!matches && Array.isArray(this.filterNameKeys) && this.filterNameKeys.length) {
+        matches = this.filterNameKeys.some(key => 
+          d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
+        );
       }
 
       d.isHidden = !matches;
