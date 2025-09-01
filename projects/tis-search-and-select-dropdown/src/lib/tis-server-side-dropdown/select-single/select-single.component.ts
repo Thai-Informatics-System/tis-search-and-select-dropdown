@@ -66,7 +66,7 @@ export class SelectSingleComponent {
   private change = new EventEmitter<string>();
 
   /** list of data */
-  private data: any[] = []
+  data: any[] = []
 
   /** list of data filtered by search keyword */
   public options: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
@@ -96,7 +96,7 @@ export class SelectSingleComponent {
     this.listCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe((value) => {
-        if(this.badgeKey){
+        if (this.badgeKey) {
           this.setValueInHtml(value);
         }
         this.onInputChange(value);
@@ -130,7 +130,7 @@ export class SelectSingleComponent {
       this.initialData = changes['initialData'].currentValue;
       // console.log("=== app-single-select :: ngOnChanges['initialData'] ===", this.initialData);
       this.data = this.initialData;
-      if(this.badgeKey){
+      if (this.badgeKey) {
         this.setValueInHtml(this.listCtrl?.getRawValue() ?? null);
       }
       this.prepareData();
@@ -153,7 +153,7 @@ export class SelectSingleComponent {
         this.noEntriesFoundLabel = this.config.noEntriesFoundLabel;
       }
 
-      if(this.config?.badge?.key){
+      if (this.config?.badge?.key) {
         this.badgeKey = this.config?.badge?.key;
       }
 
@@ -360,6 +360,20 @@ export class SelectSingleComponent {
         this.data = [];
         this.prepareData();
       }
+    }
+    else if (this.config?.setFirstOption && Array.isArray(this.initialData) && this.initialData?.length) {
+      setTimeout(() => {
+        if (this.config?.ifLengthOnlyOne === true) {
+          if (this.initialData?.length == 1) {
+            this.writeValue(this.initialData[0][this.valueKey]);
+            // this.onInputChange(this.initialData[0][this.valueKey]);
+          }
+        }
+        else {
+          this.writeValue(this.initialData[0][this.valueKey]);
+          // this.onInputChange(this.initialData[0][this.valueKey]);
+        }
+      }, 50);
     }
   }
 

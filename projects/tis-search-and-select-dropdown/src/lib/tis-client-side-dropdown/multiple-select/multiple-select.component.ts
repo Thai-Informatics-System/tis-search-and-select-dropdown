@@ -74,7 +74,7 @@ export class MultipleSelectComponent {
   private change = new EventEmitter<string>();
 
   /** list of data */
-  private data: any[] = []
+  data: any[] = []
 
   /** list of data filtered by search keyword */
   public options: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
@@ -101,7 +101,7 @@ export class MultipleSelectComponent {
     this.listCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe((value: any) => {
-        if(this.badgeKey){
+        if (this.badgeKey) {
           this.setValueInHtml(value);
         }
         if (!this.isSameArray(this.selectedOptions, value || [])) {
@@ -143,7 +143,7 @@ export class MultipleSelectComponent {
           this.selectedOptions = [...new Set(this.selectedOptions || [])];
         }
       }
-      if(this.badgeKey){
+      if (this.badgeKey) {
         this.setValueInHtml(value ?? null);
       }
       this.prepareData();
@@ -166,7 +166,7 @@ export class MultipleSelectComponent {
         this.noEntriesFoundLabel = this.config.noEntriesFoundLabel;
       }
 
-      if(this.config?.badge?.key){
+      if (this.config?.badge?.key) {
         this.badgeKey = this.config?.badge?.key;
       }
 
@@ -251,12 +251,12 @@ export class MultipleSelectComponent {
   }
 
   setValueInHtml(value: any) {
-    if(Array.isArray(value)){
+    if (Array.isArray(value)) {
       let selectedValues = this.data.filter(v => value.includes(v[this.valueKey]));
       if (selectedValues?.length) {
         let element: any = document?.getElementById(this.customId);
         let selectedElements: HTMLCollectionOf<HTMLElement> = element?.getElementsByClassName('mat-mdc-select-value') as HTMLCollectionOf<HTMLElement>;
-    
+
         // Ensure that we are working with the first element in the collection
         if (selectedElements && selectedElements.length > 0) {
           selectedElements[0].style.position = `relative`;
@@ -264,18 +264,18 @@ export class MultipleSelectComponent {
           htmlStr += `<span class="mat-mdc-select-value-text" style=""><span class="mat-mdc-select-min-line">${selectedValues?.map(item => item[this.nameKey])?.join(', ')}`;
           let tags: any = [];
 
-          selectedValues?.map(item =>{
-            if(item[this.badgeKey]?.length){
+          selectedValues?.map(item => {
+            if (item[this.badgeKey]?.length) {
               tags = [...tags, ...item[this.badgeKey]];
             }
           });
 
           tags = [...new Set(tags)];
 
-          if(this.badgeKey && this.badgeKey != '' && tags?.length){
+          if (this.badgeKey && this.badgeKey != '' && tags?.length) {
             htmlStr += `<span id="selected_badge_${selectedValues?.map(item => item[this.nameKey])?.join('_')}" style="display: flex; gap: 5px; justify-content: center; align-items: center; position: absolute; right: 0px; top: 0px; background-color: white; padding-left: 5px; padding-right: 5px;">`;
             tags?.map((badge: any) => {
-              if(this.getBadge(badge)){
+              if (this.getBadge(badge)) {
                 htmlStr += `<span class="tis-badge-sm tis-badge-round ${this.getBadge(badge)?.class}" style="font-size: 12px !important; padding: 2px 5px !important; line-height: 16px !important;">${this.getBadge(badge)?.value}</span>`;
               }
             });
@@ -286,10 +286,10 @@ export class MultipleSelectComponent {
           selectedElements[0].innerHTML = htmlStr;
         }
       }
-      else{
+      else {
         let element: any = document?.getElementById(this.customId);
         let selectedElements: HTMLCollectionOf<HTMLElement> = element?.getElementsByClassName('mat-mdc-select-value') as HTMLCollectionOf<HTMLElement>;
-    
+
         // Ensure that we are working with the first element in the collection
         if (selectedElements && selectedElements.length > 0) {
           selectedElements[0].innerHTML = '';
@@ -347,14 +347,14 @@ export class MultipleSelectComponent {
         let value = ['*', ...opIds];
         this.selectedOptions.push(...value);
       }
-      else if(this.config.isAllOption == true){
+      else if (this.config.isAllOption == true) {
         let opIds = this.data?.length ? this.data?.map(r => r[this.valueKey]) : [];
         if (this.isSameArray(opIds, value || [])) {
           addedValues.push('*');
         }
         this.selectedOptions.push(...addedValues);
       }
-      else{
+      else {
         this.selectedOptions.push(...addedValues);
       }
     }
@@ -439,6 +439,20 @@ export class MultipleSelectComponent {
           });
       }
     }
+    else if (this.config?.setFirstOption && Array.isArray(this.initialData) && this.initialData?.length) {
+      setTimeout(() => {
+        if (this.config?.ifLengthOnlyOne === true) {
+          if (this.initialData?.length == 1) {
+            this.listCtrl.setValue([this.data[0][this.valueKey]]);
+            this.selectedOptions = [this.data[0][this.valueKey]];
+          }
+        }
+        else {
+          this.listCtrl.setValue([this.data[0][this.valueKey]]);
+          this.selectedOptions = [this.data[0][this.valueKey]];
+        }
+      }, 50);
+    }
   }
 
   private prepareData() {
@@ -487,21 +501,21 @@ export class MultipleSelectComponent {
 
     //   return d;
     // });
-    
+
     data = data.map(d => {
       // Check main nameKey
       let matches = d[this.nameKey]?.toLowerCase()?.indexOf(search) > -1;
 
       // Check additionalNameKeys
       if (!matches && Array.isArray(this.additionalNameKeys) && this.additionalNameKeys.length) {
-        matches = this.additionalNameKeys.some(key => 
+        matches = this.additionalNameKeys.some(key =>
           d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
         );
       }
 
       // Check filterNameKeys
       if (!matches && Array.isArray(this.filterNameKeys) && this.filterNameKeys.length) {
-        matches = this.filterNameKeys.some(key => 
+        matches = this.filterNameKeys.some(key =>
           d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
         );
       }

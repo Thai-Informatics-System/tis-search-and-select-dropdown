@@ -10,7 +10,7 @@
                 }
         
                 @if (config?.isAllOption) {
-                    <mat-option value="*" [style.display]="searchFilterCtrl.value == '' ? 'flex': 'none'">All</mat-option>
+                    <mat-option value="*" [style.display]="searchFilterCtrl.value == '' && data.length > 0 ? 'flex': 'none'">All</mat-option>
                 }
                 <ng-container *ngFor="let option of options | async; let i = index;">
                     <mat-option style="position: relative !important;" [style.padding-right]="setPadding(option[valueKey]+'_'+i)" *ngIf="option && option[valueKey]" [value]="option[valueKey]" matTooltipPosition="right" [matTooltip]="option[nameKey] + '' + displayAdditional(option)" [matTooltipShowDelay]="100" matTooltipTouchGestures="off" [style.display]="option?.isHidden ? 'none': 'flex'">

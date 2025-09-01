@@ -102,7 +102,7 @@ export class SelectMultipleComponent {
         this.listCtrl.valueChanges
             .pipe(takeUntil(this._onDestroy))
             .subscribe((value: any) => {
-                if(this.badgeKey){
+                if (this.badgeKey) {
                     this.setValueInHtml(value);
                 }
                 if (!this.isSameArray(this.selectedOptions, value || [])) {
@@ -145,7 +145,7 @@ export class SelectMultipleComponent {
                     this.selectedOptions = [...new Set(this.selectedOptions || [])];
                 }
             }
-            if(this.badgeKey){
+            if (this.badgeKey) {
                 this.setValueInHtml(value ?? null);
             }
             this.prepareData();
@@ -168,7 +168,7 @@ export class SelectMultipleComponent {
                 this.noEntriesFoundLabel = this.config.noEntriesFoundLabel;
             }
 
-            if(this.config?.badge?.key){
+            if (this.config?.badge?.key) {
                 this.badgeKey = this.config?.badge?.key;
             }
 
@@ -367,14 +367,14 @@ export class SelectMultipleComponent {
                 let value = ['*', ...opIds];
                 this.selectedOptions.push(...value);
             }
-            else if(this.config.isAllOption == true){
+            else if (this.config.isAllOption == true) {
                 let opIds = this.data?.length ? this.data?.map(r => r[this.valueKey]) : [];
                 if (this.isSameArray(opIds, value || [])) {
                     addedValues.push('*');
                 }
                 this.selectedOptions.push(...addedValues);
             }
-            else{
+            else {
                 this.selectedOptions.push(...addedValues);
             }
         }
@@ -501,6 +501,20 @@ export class SelectMultipleComponent {
                 this.data = [];
                 this.prepareData();
             }
+        }
+        else if (this.config?.setFirstOption && Array.isArray(this.initialData) && this.initialData?.length) {
+            setTimeout(() => {
+                if (this.config?.ifLengthOnlyOne === true) {
+                    if (this.initialData?.length == 1) {
+                        this.listCtrl.setValue([this.data[0][this.valueKey]]);
+                        this.selectedOptions = [this.data[0][this.valueKey]];
+                    }
+                }
+                else {
+                    this.listCtrl.setValue([this.data[0][this.valueKey]]);
+                    this.selectedOptions = [this.data[0][this.valueKey]];
+                }
+            }, 50);
         }
     }
 

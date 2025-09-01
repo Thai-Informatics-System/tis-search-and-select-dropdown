@@ -2059,7 +2059,21 @@ export class AppComponent {
   options4Data: any;
 
   config = {
-    unitId: <ServerSideSingleSelectionConfig>{
+    unitId: <ClientSideSingleSelectionConfig>{
+      // uri: '/service-management/common/get-units',
+      // method: 'POST',
+      // limit: 50,
+      isSearchable: true,
+      isAllOption: true,
+      setFirstOption: true,
+      ifLengthOnlyOne: true,
+      isEnableRefreshMode: false,
+      additionalName: {
+        keys: ['unitNumber', 'buildingName', 'projectName'],
+        separators: [' | ', ' | ', ' | ']
+      }
+    },
+    unitIdMultiple: <ClientSideMultipleSelectionConfig>{
       // uri: '/service-management/common/get-units',
       // method: 'POST',
       // limit: 50,
@@ -2090,7 +2104,8 @@ export class AppComponent {
       uri: 'https://mocki.io/v1/32ff3217-e809-442c-8e63-b4b0a8416325',
       method: 'GET',
       limit: 100,
-      setFirstOption: false,
+      setFirstOption: true,
+      // ifLengthOnlyOne: true,
       isSearchable: true,
       isAllOption: true,
       isEnableRefreshMode: false,
@@ -2114,7 +2129,7 @@ export class AppComponent {
       }
     },
     multipleServerSideSelect: <ServerSideMultipleSelectionConfig>{
-      uri: 'https://mocki.io/v1/32ff3217-e809-442c-8e63-b4b0a8416325',
+      uri: 'https://mocki.io/v1/32e34bed-6b9f-4d58-a774-e041109f8f7e',
       method: 'GET',
       limit: 100,
       setFirstOption: false,
@@ -2149,6 +2164,7 @@ export class AppComponent {
   ngOnInit() {
     this.form = new FormGroup({
       singleClientSideSelect: new FormControl('*'),
+      multipleClientSideSelectWithFirst: new FormControl('*'),
       multipleClientSideSelect: new FormControl('*'),
       singleServerSideSelect: new FormControl('*'),
       multipleServerSideSelect: new FormControl(null),
@@ -2157,8 +2173,8 @@ export class AppComponent {
 
     // this.form.get('singleClientSideSelect')?.disable();
     // setTimeout(() => {
-    //   this.form.get('singleClientSideSelect')?.enable();
-    // }, 3000);
+    //   this.form.get('singleClientSideSelect')?.setValue('*');
+    // }, 100);
 
     // setTimeout(() => {
     //   this.form.get('multipleClientSideSelect')?.setValue(this.options2?.map(t => t.teamId));

@@ -4,6 +4,10 @@
       nameKey="houseNumber" valueKey="id" [data]="options1" formControlName="singleClientSideSelect"
       [config]="config.unitId" (selectedValueNamesUpdated)="setOptionFirstData($event)"></tis-client-side-dropdown>
 
+    <tis-client-side-dropdown type="multiple" classes="custom-class" panelClass="custom-panel" label="Client Side Multiple Selection With Set First Option"
+      nameKey="houseNumber" valueKey="id" [data]="options1" formControlName="multipleClientSideSelectWithFirst"
+      [config]="config.unitIdMultiple"></tis-client-side-dropdown>
+
     <tis-client-side-dropdown type="multiple" classes="custom-class" panelClass="custom-panel" label="Client Side Multiple Selection"
       nameKey="teamName" valueKey="teamId" [(data)]="options2" formControlName="multipleClientSideSelect"
       [config]="config.multipleClientSideSelect" (selectedValueNamesUpdated)="setOptionSecondData($event)"></tis-client-side-dropdown>
@@ -19,11 +23,11 @@
   </div>
   <div style="padding: 15px; display: grid; gap: 15px; grid-template-columns: repeat(2, minmax(0, 1fr));">
     <tis-server-side-dropdown type="single" classes="custom-class" panelClass="custom-panel" label="Server Side Single Selection"
-      nameKey="title" valueKey="id" [(data)]="options3" formControlName="singleServerSideSelect"
+      nameKey="shortDesc" valueKey="id" [(data)]="options3" formControlName="singleServerSideSelect"
       [config]="config.singleServerSideSelect" (selectedValueNamesUpdated)="setOptionThirdData($event)"></tis-server-side-dropdown>
 
     <tis-server-side-dropdown type="multiple" classes="custom-class" panelClass="custom-panel" label="Server Side Multiple Selection"
-      nameKey="title" valueKey="id" [(data)]="options4" formControlName="multipleServerSideSelect"
+      nameKey="shortDesc" valueKey="id" [(data)]="options4" formControlName="multipleServerSideSelect"
       [config]="config.multipleServerSideSelect" (selectedValueNamesUpdated)="setOptionFourthData($event)"></tis-server-side-dropdown>
   </div>
   <div style="margin-top: 15px; padding: 15px; display: grid; gap: 15px; grid-template-columns: repeat(2, minmax(0, 1fr));">

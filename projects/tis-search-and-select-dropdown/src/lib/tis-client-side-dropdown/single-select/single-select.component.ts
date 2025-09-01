@@ -68,7 +68,7 @@ export class SingleSelectComponent {
   private change = new EventEmitter<string>();
 
   /** list of data */
-  private data: any[] = []
+  data: any[] = []
 
   /** list of data filtered by search keyword */
   public options: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
@@ -103,7 +103,7 @@ export class SingleSelectComponent {
     this.listCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe((value) => {
-        if(this.badgeKey){
+        if (this.badgeKey) {
           this.setValueInHtml(value);
         }
         this.onInputChange(value);
@@ -134,7 +134,7 @@ export class SingleSelectComponent {
       this.initialData = changes['initialData'].currentValue;
       // console.log("=== app-single-select :: ngOnChanges['initialData'] ===", this.initialData);
       this.data = this.initialData;
-      if(this.badgeKey){
+      if (this.badgeKey) {
         this.setValueInHtml(this.listCtrl?.getRawValue() ?? null);
       }
       this.prepareData();
@@ -157,7 +157,7 @@ export class SingleSelectComponent {
         this.noEntriesFoundLabel = this.config.noEntriesFoundLabel;
       }
 
-      if(this.config?.badge?.key){
+      if (this.config?.badge?.key) {
         this.badgeKey = this.config?.badge?.key;
       }
 
@@ -194,6 +194,7 @@ export class SingleSelectComponent {
   }
 
   writeValue(value: string) {
+    // alert(`writeValue: ${value}`);
     const valueChanged = value !== this.listCtrl.value;
     if (valueChanged) {
       // console.log("=== app-single-select :: writeValue ===", value);
@@ -233,22 +234,22 @@ export class SingleSelectComponent {
   setValueInHtml(value: any) {
     console.log("==== setValueInHtml::value ====", value);
     console.log("==== setValueInHtml::customId ====", this.customId);
-    
+
     let selectedValue = this.data?.find(v => v[this.valueKey] == value);
     if (selectedValue) {
       let element: any = document?.getElementById(this.customId);
       let selectedElements: HTMLCollectionOf<HTMLElement> = element?.getElementsByClassName('mat-mdc-select-value') as HTMLCollectionOf<HTMLElement>;
-      
+
       console.log("==== setValueInHtml::selectedElements ====", element, selectedElements);
       // Ensure that we are working with the first element in the collection
       if (selectedElements && selectedElements.length > 0) {
         selectedElements[0].style.position = `relative`;
         let htmlStr = ``
         htmlStr += `<span class="mat-mdc-select-value-text"><span class="mat-mdc-select-min-line">${selectedValue[this.nameKey]}`;
-        if(this.badgeKey && this.badgeKey != '' && selectedValue[this.badgeKey]?.length){
+        if (this.badgeKey && this.badgeKey != '' && selectedValue[this.badgeKey]?.length) {
           htmlStr += `<span id="selected_badge_${selectedValue[this.valueKey]}" style="display: flex; gap: 5px; justify-content: center; align-items: center; position: absolute; right: 0px; top: 0px; background-color: white; padding-left: 5px; padding-right: 5px;">`;
           selectedValue[this.badgeKey]?.map((badge: any) => {
-            if(this.getBadge(badge)){
+            if (this.getBadge(badge)) {
               htmlStr += `<span class="tis-badge-sm tis-badge-round ${this.getBadge(badge)?.class}" style="font-size: 12px !important; padding: 2px 5px !important; line-height: 16px !important;">${this.getBadge(badge)?.value}</span>`;
             }
           });
@@ -259,10 +260,10 @@ export class SingleSelectComponent {
         selectedElements[0].innerHTML = htmlStr;
       }
     }
-    else{
+    else {
       let element: any = document?.getElementById(this.customId);
       let selectedElements: HTMLCollectionOf<HTMLElement> = element?.getElementsByClassName('mat-mdc-select-value') as HTMLCollectionOf<HTMLElement>;
-  
+
       // Ensure that we are working with the first element in the collection
       if (selectedElements && selectedElements.length > 0) {
         selectedElements[0].innerHTML = `<span class="mat-mdc-select-value-text"></span>`;
@@ -346,6 +347,20 @@ export class SingleSelectComponent {
           });
       }
     }
+    else if (this.config?.setFirstOption && Array.isArray(this.initialData) && this.initialData?.length) {
+      setTimeout(() => {
+        if (this.config?.ifLengthOnlyOne === true) {
+          if (this.initialData?.length == 1) {
+            this.writeValue(this.initialData[0][this.valueKey]);
+            // this.onInputChange(this.initialData[0][this.valueKey]);
+          }
+        }
+        else {
+          this.writeValue(this.initialData[0][this.valueKey]);
+          // this.onInputChange(this.initialData[0][this.valueKey]);
+        }
+      }, 50);
+    }
   }
 
   private prepareData() {
@@ -395,7 +410,7 @@ export class SingleSelectComponent {
           if (d[key]) searchFields.push(d[key]);
         });
         // Check if any field contains the search string
-        return searchFields.some(field => 
+        return searchFields.some(field =>
           typeof field === 'string' && field.toLowerCase().includes(search)
         );
       })

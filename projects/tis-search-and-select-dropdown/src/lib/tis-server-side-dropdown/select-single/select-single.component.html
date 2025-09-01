@@ -8,7 +8,7 @@
                     <mat-select-search [formControl]="searchFilterCtrl" [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="noEntriesFoundLabel" [loading]="loading"></mat-select-search>
                 }
         
-                @if (config?.isAllOption && searchFilterCtrl.value == '') {
+                @if (config?.isAllOption && searchFilterCtrl.value == '' && data.length > 0) {
                     <mat-option value="*">All</mat-option>
                 }
                 <ng-container *ngFor="let option of options | async; let i = index;">
