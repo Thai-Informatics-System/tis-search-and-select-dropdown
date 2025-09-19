@@ -1,0 +1,90 @@
+name: Bump Version, Tag and Publish
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:  # Allow manual triggering
+
+permissions:
+  contents: write  # For committing and pushing tags
+  packages: write  # For publishing to npm
+
+jobs:
+  bump-and-publish:
+    runs-on: ubuntu-latest
+    env:
+      LIB_NAME: tis-search-and-select-dropdown
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN || github.token }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install dependencies
+        run: npm ci --force
+
+      - name: Bump version & inject
+        env:
+          BUMP: patch
+          LIB_NAME: ${{ env.LIB_NAME }}  # ✅ Pass LIB_NAME to the script
+        run: node scripts/bump-and-inject.mjs
+
+      - name: Verify version sync
+        run: |
+          ROOT_VERSION=$(node -p "require('./package.json').version")
+          LIB_VERSION=$(node -p "require('./projects/${{ env.LIB_NAME }}/package.json').version")
+          
+          if [ "$ROOT_VERSION" != "$LIB_VERSION" ]; then
+            echo "❌ Version mismatch: root=$ROOT_VERSION, lib=$LIB_VERSION"
+            exit 1
+          fi
+          
+          echo "✅ Versions synchronized: $ROOT_VERSION"
+
+      - name: Commit version changes (skip CI)
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add package.json projects/${{ env.LIB_NAME }}/package.json
+            git commit -m "chore: bump version for ${{ env.LIB_NAME }} [skip ci]"
+            git push
+          fi
+
+      - name: Create tag for new version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="v$VERSION"
+          # Only create tag if it doesn't exist
+          if ! git rev-parse "$TAG" >/dev/null 2>&1; then
+            git tag "$TAG"
+            git push origin "$TAG"
+            echo "✅ Created and pushed tag: $TAG"
+          else
+            echo "⚪ Tag $TAG already exists, skipping"
+          fi
+
+      - name: Build library
+        run: npm run build ${{ env.LIB_NAME }}
+
+      - name: Verify build output
+        run: |
+          if [ ! -f "./dist/${{ env.LIB_NAME }}/package.json" ]; then
+            echo "❌ Build failed - package.json not found in dist"
+            exit 1
+          fi
+          
+          echo "✅ Build verification successful for ${{ env.LIB_NAME }}"
+
+      - name: Publish to npm
+        run: npm publish ./dist/${{ env.LIB_NAME }} --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

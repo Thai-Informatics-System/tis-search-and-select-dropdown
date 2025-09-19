@@ -36,6 +36,7 @@ export class SelectSingleComponent {
   @Input() refetch = true;
   @Input() isRequiredPayload = false;
   @Input() validationMessages: ValidationMessages[] = [];
+  @Input() payload: any;
   @Input({ required: true }) config!: ServerSideSingleSelectionConfig;
   @Input() loading: boolean = false;
   @Input() isRefreshing: boolean = false;
@@ -138,6 +139,9 @@ export class SelectSingleComponent {
     if (changes['refetch'] && changes['refetch'].currentValue == true) {
       this.getData();
       this.refetchChange.emit(false)
+    }
+    if (changes['payload'] && changes['payload'].isFirstChange() == false) {
+      this.data = [];
     }
     if (changes['config']) {
       this.config = changes['config'].currentValue;

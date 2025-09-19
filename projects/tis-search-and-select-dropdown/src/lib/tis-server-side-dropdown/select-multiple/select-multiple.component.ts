@@ -38,6 +38,7 @@ export class SelectMultipleComponent {
     @Input() refetch = false;
     @Input() isRequiredPayload = false;
     @Input() validationMessages: ValidationMessages[] = [];
+    @Input() payload: any;
     @Input({ required: true }) config!: ServerSideMultipleSelectionConfig;
     @Input() loading: boolean = false;
     @Input() isRefreshing: boolean = false;
@@ -153,6 +154,9 @@ export class SelectMultipleComponent {
         if (changes['refetch'] && changes['refetch'].currentValue == true) {
             this.getData();
             this.refetchChange.emit(false)
+        }
+        if (changes['payload'] && changes['payload'].isFirstChange() == false) {
+            this.data = [];
         }
         if (changes['config']) {
             this.config = changes['config'].currentValue;

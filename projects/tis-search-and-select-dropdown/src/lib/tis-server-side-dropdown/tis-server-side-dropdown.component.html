@@ -3,12 +3,12 @@
         [formControl]="fc" [isRequired]="isRequired" [nameKey]="nameKey" [valueKey]="valueKey" [initialData]="data"
         (initialDataChange)="setData($event)" [validationMessages]="validationMessages" [config]="config"
         [(loading)]="loading" (loadingChange)="onLoadingChange($event)" [(refetch)]="toggle"
-        [isRequiredPayload]="isRequiredPayload"></app-select-single>
+        [isRequiredPayload]="isRequiredPayload" [payload]="payload"></app-select-single>
 }
 @else if(type == 'multiple'){
     <app-select-multiple [customId]="customId" [appearance]="appearance" [classes]="classes" [panelClass]="panelClass" [label]="label" [placeholder]="placeholder"
         [formControl]="fc" [isRequired]="isRequired" [nameKey]="nameKey" [valueKey]="valueKey" [initialData]="data"
         (initialDataChange)="setData($event)" [validationMessages]="validationMessages" [config]="config"
         [(loading)]="loading" (loadingChange)="onLoadingChange($event)" [(refetch)]="toggle"
-        [isRequiredPayload]="isRequiredPayload"></app-select-multiple>
+        [isRequiredPayload]="isRequiredPayload" [payload]="payload"></app-select-multiple>
 }
