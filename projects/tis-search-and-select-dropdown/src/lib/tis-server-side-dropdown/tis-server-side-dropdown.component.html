@@ -2,13 +2,13 @@
     <app-select-single [customId]="customId" [appearance]="appearance" [classes]="classes" [panelClass]="panelClass" [label]="label" [placeholder]="placeholder"
         [formControl]="fc" [isRequired]="isRequired" [nameKey]="nameKey" [valueKey]="valueKey" [initialData]="data"
         (initialDataChange)="setData($event)" [validationMessages]="validationMessages" [config]="config"
-        [(loading)]="loading" (loadingChange)="onLoadingChange($event)" [(refetch)]="toggle"
+        [(loading)]="loading" (loadingChange)="onLoadingChange($event)" [(refetch)]="refetch" (refetchChange)="refetchChange.emit($event)"
         [isRequiredPayload]="isRequiredPayload" [payload]="payload"></app-select-single>
 }
 @else if(type == 'multiple'){
     <app-select-multiple [customId]="customId" [appearance]="appearance" [classes]="classes" [panelClass]="panelClass" [label]="label" [placeholder]="placeholder"
         [formControl]="fc" [isRequired]="isRequired" [nameKey]="nameKey" [valueKey]="valueKey" [initialData]="data"
         (initialDataChange)="setData($event)" [validationMessages]="validationMessages" [config]="config"
-        [(loading)]="loading" (loadingChange)="onLoadingChange($event)" [(refetch)]="toggle"
+        [(loading)]="loading" (loadingChange)="onLoadingChange($event)" [(refetch)]="refetch" (refetchChange)="refetchChange.emit($event)"
         [isRequiredPayload]="isRequiredPayload" [payload]="payload"></app-select-multiple>
 }

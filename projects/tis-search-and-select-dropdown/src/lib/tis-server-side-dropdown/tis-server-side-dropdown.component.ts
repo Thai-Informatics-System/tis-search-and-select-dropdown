@@ -47,12 +47,12 @@ export class TisServerSideDropdownComponent {
   @Input({ required: true }) config!: ServerSideSingleSelectionConfig;
   @Input() loading: boolean = false;
   @Input() isRefreshing: boolean = false;
+  @Input() refetch = false;
 
   @Output() dataChange = new EventEmitter<any>();
   @Output() loadingChange = new EventEmitter<boolean>();
   @Output() selectedValueNamesUpdated = new EventEmitter<SelectedFilterDisplayValuesType>();
-
-  toggle = false;
+  @Output() refetchChange = new EventEmitter<boolean>();
 
 
   fc = new FormControl();
@@ -104,7 +104,7 @@ export class TisServerSideDropdownComponent {
     if (changes['payload']) {
       if (changes['payload']?.currentValue && Object.keys(changes['payload'].currentValue)?.length) {
         this.config.filter = { ...this.config.filter, ...changes['payload'].currentValue };
-        this.toggle = true;
+        this.refetch = true;
       }
     }
 
