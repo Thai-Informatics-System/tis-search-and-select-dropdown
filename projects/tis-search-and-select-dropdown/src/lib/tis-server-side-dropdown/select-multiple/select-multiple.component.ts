@@ -471,27 +471,27 @@ export class SelectMultipleComponent {
                             //     return d;
                             // });
 
-                            data = data.map(d => {
-                                // Check main nameKey
-                                let matches = d[this.nameKey]?.toLowerCase()?.indexOf(search) > -1;
+                            // data = data.map(d => {
+                            //     // Check main nameKey
+                            //     let matches = d[this.nameKey]?.toLowerCase()?.indexOf(search) > -1;
 
-                                // Check additionalNameKeys
-                                if (!matches && Array.isArray(this.additionalNameKeys) && this.additionalNameKeys?.length) {
-                                    matches = this.additionalNameKeys.some(key =>
-                                        d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
-                                    );
-                                }
+                            //     // Check additionalNameKeys
+                            //     if (!matches && Array.isArray(this.additionalNameKeys) && this.additionalNameKeys?.length) {
+                            //         matches = this.additionalNameKeys.some(key =>
+                            //             d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
+                            //         );
+                            //     }
 
-                                // Check filterNameKeys
-                                if (!matches && Array.isArray(this.filterNameKeys) && this.filterNameKeys?.length) {
-                                    matches = this.filterNameKeys.some(key =>
-                                        d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
-                                    );
-                                }
+                            //     // Check filterNameKeys
+                            //     if (!matches && Array.isArray(this.filterNameKeys) && this.filterNameKeys?.length) {
+                            //         matches = this.filterNameKeys.some(key =>
+                            //             d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
+                            //         );
+                            //     }
 
-                                d.isHidden = !matches;
-                                return d;
-                            });
+                            //     d.isHidden = !matches;
+                            //     return d;
+                            // });
                         }
 
                         this.options.next(data.slice());
