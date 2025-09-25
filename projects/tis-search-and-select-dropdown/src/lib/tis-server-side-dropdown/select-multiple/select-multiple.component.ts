@@ -476,16 +476,16 @@ export class SelectMultipleComponent {
                                 let matches = d[this.nameKey]?.toLowerCase()?.indexOf(search) > -1;
 
                                 // Check additionalNameKeys
-                                if (!matches && Array.isArray(this.additionalNameKeys) && this.additionalNameKeys.length) {
+                                if (!matches && Array.isArray(this.additionalNameKeys) && this.additionalNameKeys?.length) {
                                     matches = this.additionalNameKeys.some(key =>
-                                    d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
+                                        d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
                                     );
                                 }
 
                                 // Check filterNameKeys
-                                if (!matches && Array.isArray(this.filterNameKeys) && this.filterNameKeys.length) {
+                                if (!matches && Array.isArray(this.filterNameKeys) && this.filterNameKeys?.length) {
                                     matches = this.filterNameKeys.some(key =>
-                                    d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
+                                        d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
                                     );
                                 }
 
