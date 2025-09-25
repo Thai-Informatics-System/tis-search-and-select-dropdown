@@ -73,6 +73,9 @@ export class TisServerSideDropdownComponent {
   ) { }
 
   ngOnInit() {
+    if (!Array.isArray(this.data)) {
+      this.data = [];
+    }
     this.validationMessages?.map(v => {
       if (v.type == 'required') {
         this.isRequired = true;
@@ -116,6 +119,13 @@ export class TisServerSideDropdownComponent {
     }
 
     if (changes['data']) {
+      if (changes['data']?.currentValue && Array.isArray(changes['data'].currentValue)) {
+        this.data = changes['data'].currentValue;
+      }
+      else{
+        this.data = [];
+      }
+
       if (this.fc?.value) {
         this.handleSelectedListChange(this.fc.value);
       }
