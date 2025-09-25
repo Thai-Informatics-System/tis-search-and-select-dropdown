@@ -43,6 +43,7 @@ export interface ServerSideMultipleSelectionConfig {
     createNew: CreateNew | null,
     noEntriesFoundLabel: string | null,
     additionalName: AdditionalName | null,
+    filterNameKeys?: string[] | null,
     dataValueKey: string | null,
     badge: Badge | null,
 }

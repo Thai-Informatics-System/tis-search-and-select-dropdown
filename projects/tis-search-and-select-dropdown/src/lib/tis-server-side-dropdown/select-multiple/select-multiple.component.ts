@@ -51,6 +51,7 @@ export class SelectMultipleComponent {
 
     additionalNameKeys: string[] = [];
     separatorType: string[] = ['(,)'];
+    filterNameKeys: string[] = [];
     badgeKey!: string;
 
     selectedOptions: any[] = [];
@@ -182,6 +183,10 @@ export class SelectMultipleComponent {
 
             if (this.config?.additionalName?.separators) {
                 this.separatorType = this.config?.additionalName?.separators;
+            }
+
+            if (this.config?.filterNameKeys) {
+                this.filterNameKeys = this.config?.filterNameKeys || [];
             }
 
             this.getData(null, false, [], true);
@@ -454,14 +459,37 @@ export class SelectMultipleComponent {
 
                         if (search && search != '') {
                             data = data?.filter(d => d && Object.keys(d).length > 0);
+
+                            // data = data.map(d => {
+                            //     if (d[this.nameKey]?.toLowerCase()?.indexOf(search) > -1) {
+                            //         d.isHidden = false;
+                            //     }
+                            //     else {
+                            //         d.isHidden = true;
+                            //     }
+
+                            //     return d;
+                            // });
+
                             data = data.map(d => {
-                                if (d[this.nameKey]?.toLowerCase()?.indexOf(search) > -1) {
-                                    d.isHidden = false;
-                                }
-                                else {
-                                    d.isHidden = true;
+                                // Check main nameKey
+                                let matches = d[this.nameKey]?.toLowerCase()?.indexOf(search) > -1;
+
+                                // Check additionalNameKeys
+                                if (!matches && Array.isArray(this.additionalNameKeys) && this.additionalNameKeys.length) {
+                                    matches = this.additionalNameKeys.some(key =>
+                                    d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
+                                    );
                                 }
 
+                                // Check filterNameKeys
+                                if (!matches && Array.isArray(this.filterNameKeys) && this.filterNameKeys.length) {
+                                    matches = this.filterNameKeys.some(key =>
+                                    d[key]?.toString()?.toLowerCase()?.indexOf(search) > -1
+                                    );
+                                }
+
+                                d.isHidden = !matches;
                                 return d;
                             });
                         }
