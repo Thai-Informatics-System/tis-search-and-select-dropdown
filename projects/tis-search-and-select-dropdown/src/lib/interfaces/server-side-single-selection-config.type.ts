@@ -11,6 +11,11 @@ interface CreateNew {
     clickBtn?: any,
 }
 
+interface LastOption {
+    label: string,
+    clickBtn?: any,
+}
+
 interface AdditionalName {
     keys: string[] | null,
     separators: string[] | null,
@@ -46,4 +51,5 @@ export interface ServerSideSingleSelectionConfig {
     filterNameKeys?: string[] | null,
     dataValueKey: string | null,
     badge: Badge | null,
+    lastOption: LastOption | null,
 }

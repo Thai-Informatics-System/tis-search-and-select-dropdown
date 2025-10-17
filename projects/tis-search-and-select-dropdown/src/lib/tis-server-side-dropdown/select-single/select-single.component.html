@@ -21,6 +21,9 @@
                         </span>
                     </mat-option>
                 </ng-container>
+                @if (loading === false && config?.lastOption?.label) {
+                    <mat-option [value]="null" (onClick)="config?.lastOption?.clickBtn()">{{config?.lastOption?.label}}</mat-option>
+                }
             </mat-select>
             @for (validation of validationMessages; track validation.type) {
                 <mat-error *ngIf="listCtrl?.hasError(validation.type) && (listCtrl?.dirty || listCtrl?.touched)">
