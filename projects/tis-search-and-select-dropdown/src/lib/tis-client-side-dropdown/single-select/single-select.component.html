@@ -23,7 +23,7 @@
                 </ng-container>
 
                 @if (loading === false && config?.lastOption?.label) {
-                    <mat-option [value]="null" (onClick)="config?.lastOption?.clickBtn()">{{config?.lastOption?.label}}</mat-option>
+                    <mat-option [value]="null" (click)="config?.lastOption?.clickBtn()">{{config?.lastOption?.label}}</mat-option>
                 }
             </mat-select>
             @for (validation of validationMessages; track validation.type) {
