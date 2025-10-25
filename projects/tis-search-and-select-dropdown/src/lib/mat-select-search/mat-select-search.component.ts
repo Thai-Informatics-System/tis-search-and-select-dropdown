@@ -145,7 +145,6 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
 
   ngAfterViewInit() {
     this.setOverlayClass();
-    this.setupMobileKeyboardHandling();
   }
 
   /**
@@ -183,15 +182,6 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
   onBlur(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.onTouched();
-  }
-
-  /**
-   * Handles input focus event
-   * @param event 
-   */
-  onInputFocus(event: Event): void {
-    // Allow keyboard to show naturally on mobile
-    // This is called when user clicks the input
   }
 
   registerOnChange(fn: Function) {
@@ -299,66 +289,6 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
     this.overlayClassSet = true;
   }
 
-
-  /**
-   * Sets up mobile keyboard handling to hide keyboard on outside clicks
-   * @private
-   */
-  private setupMobileKeyboardHandling() {
-    if (!this.isMobileDevice()) {
-      return;
-    }
-
-    // Listen for option selection to hide keyboard
-    this.matSelect.optionSelectionChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.hideKeyboard();
-      });
-
-    // Listen for clicks on the panel to hide keyboard when clicking outside input
-    this.matSelect.openedChange
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe((opened: boolean) => {
-        if (opened) {
-          setTimeout(() => {
-            const panel = this.matSelect.panel?.nativeElement;
-            if (panel) {
-              panel.addEventListener('click', this.handlePanelClick.bind(this));
-            }
-          }, 100);
-        }
-      });
-  }
-
-  /**
-   * Handles clicks on the panel to hide keyboard when clicking outside input
-   * @private
-   */
-  private handlePanelClick(event: MouseEvent) {
-    const input = this.searchSelectInput?.nativeElement;
-    const target = event.target as HTMLElement;
-    
-    // Check if the click is outside the input field
-    if (input && !input.contains(target) && !target.closest('.mat-select-search-input')) {
-      this.hideKeyboard();
-    }
-  }
-
-  /**
-   * Hides the mobile keyboard by blurring the input
-   * @private
-   */
-  private hideKeyboard() {
-    if (!this.isMobileDevice()) {
-      return;
-    }
-
-    const input = this.searchSelectInput?.nativeElement;
-    if (input) {
-      input.blur();
-    }
-  }
 
   /**
    * Initializes handling <mat-select [multiple]="true">
