@@ -51,5 +51,5 @@ export interface ClientSideSingleSelectionConfig {
     filterNameKeys?: string[] | null,
     dataValueKey: string | null,
     badge: Badge | null,
-    lastOption: LastOption | null,
+    lastOption?: LastOption | null,
 }

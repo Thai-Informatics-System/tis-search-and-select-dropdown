@@ -71,6 +71,14 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
     private changeDetectorRef: ChangeDetectorRef) {
   }
 
+  /**
+   * Detects if the current device is a mobile device
+   * @private
+   */
+  private isMobileDevice(): boolean {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+
   ngOnInit() {
     // set custom panel class
     const panelClass = 'mat-select-search-panel';
@@ -137,6 +145,7 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
 
   ngAfterViewInit() {
     this.setOverlayClass();
+    this.setupMobileKeyboardHandling();
   }
 
   /**
@@ -176,6 +185,15 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
     this.onTouched();
   }
 
+  /**
+   * Handles input focus event
+   * @param event 
+   */
+  onInputFocus(event: Event): void {
+    // Allow keyboard to show naturally on mobile
+    // This is called when user clicks the input
+  }
+
   registerOnChange(fn: Function) {
     this.onChange = fn;
   }
@@ -199,8 +217,15 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
     
     const scrollTop = panel.scrollTop;
 
-    // focus
-    this.searchSelectInput.nativeElement.focus();
+    // focus - use click() for mobile compatibility
+    const input = this.searchSelectInput.nativeElement;
+    if (this.isMobileDevice()) {
+      // On mobile, trigger click to show keyboard
+      input.click();
+      setTimeout(() => input.focus(), 0);
+    } else {
+      input.focus();
+    }
 
     panel.scrollTop = scrollTop;
   }
@@ -246,7 +271,13 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
             // console.log("==== auto focused ===", element);
             const input: HTMLInputElement | null = element.querySelector('input');
             if (input) {
-              input.focus();
+              if (this.isMobileDevice()) {
+                // // On mobile, trigger click to show keyboard
+                // input.click();
+                // setTimeout(() => input.focus(), 0);
+              } else {
+                input.focus();
+              }
               // console.log("==== auto focused ===", input);
             } else {
               // console.warn("Input element not found inside container");
@@ -268,6 +299,66 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
     this.overlayClassSet = true;
   }
 
+
+  /**
+   * Sets up mobile keyboard handling to hide keyboard on outside clicks
+   * @private
+   */
+  private setupMobileKeyboardHandling() {
+    if (!this.isMobileDevice()) {
+      return;
+    }
+
+    // Listen for option selection to hide keyboard
+    this.matSelect.optionSelectionChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.hideKeyboard();
+      });
+
+    // Listen for clicks on the panel to hide keyboard when clicking outside input
+    this.matSelect.openedChange
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe((opened: boolean) => {
+        if (opened) {
+          setTimeout(() => {
+            const panel = this.matSelect.panel?.nativeElement;
+            if (panel) {
+              panel.addEventListener('click', this.handlePanelClick.bind(this));
+            }
+          }, 100);
+        }
+      });
+  }
+
+  /**
+   * Handles clicks on the panel to hide keyboard when clicking outside input
+   * @private
+   */
+  private handlePanelClick(event: MouseEvent) {
+    const input = this.searchSelectInput?.nativeElement;
+    const target = event.target as HTMLElement;
+    
+    // Check if the click is outside the input field
+    if (input && !input.contains(target) && !target.closest('.mat-select-search-input')) {
+      this.hideKeyboard();
+    }
+  }
+
+  /**
+   * Hides the mobile keyboard by blurring the input
+   * @private
+   */
+  private hideKeyboard() {
+    if (!this.isMobileDevice()) {
+      return;
+    }
+
+    const input = this.searchSelectInput?.nativeElement;
+    if (input) {
+      input.blur();
+    }
+  }
 
   /**
    * Initializes handling <mat-select [multiple]="true">
