@@ -230,4 +230,9 @@ export class TisServerSideDropdownComponent {
     this.loading = false;
     this.loadingChange.emit(status);
   }
+
+  onRefetchChange(value: boolean) {
+    this.refetch = value;           // update local state (reset to false after fetch)
+    this.refetchChange.emit(value); // propagate to the consumer
+  }
 }
