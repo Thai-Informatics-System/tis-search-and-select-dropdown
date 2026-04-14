@@ -1,6 +1,14 @@
 {
   "name": "@servicemind.tis/tis-search-and-select-dropdown",
-  "version": "1.2.11",
+  "version": "1.2.15",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Thai-Informatics-System/tis-search-and-select-dropdown.git"
+  },
+  "homepage": "https://github.com/Thai-Informatics-System/tis-search-and-select-dropdown#readme",
+  "bugs": {
+    "url": "https://github.com/Thai-Informatics-System/tis-search-and-select-dropdown/issues"
+  },
   "peerDependencies": {
     "@angular/common": "^19.2.0",
     "@angular/core": "^19.2.0",
