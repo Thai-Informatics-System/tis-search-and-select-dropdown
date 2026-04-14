@@ -28,7 +28,7 @@
 
     <tis-server-side-dropdown type="multiple" classes="custom-class" panelClass="custom-panel" label="Server Side Multiple Selection"
       nameKey="shortDesc" valueKey="id" [(data)]="options4" formControlName="multipleServerSideSelect"
-      [config]="config.multipleServerSideSelect" (selectedValueNamesUpdated)="setOptionFourthData($event)"></tis-server-side-dropdown>
+      [config]="config.multipleServerSideSelect" [isRequiredPayload]="true" [payload]="serversidePayload" (selectedValueNamesUpdated)="setOptionFourthData($event)"></tis-server-side-dropdown>
   </div>
   <div style="margin-top: 15px; padding: 15px; display: grid; gap: 15px; grid-template-columns: repeat(2, minmax(0, 1fr));">
     <div>

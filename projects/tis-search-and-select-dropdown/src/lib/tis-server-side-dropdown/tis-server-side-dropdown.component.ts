@@ -48,6 +48,7 @@ export class TisServerSideDropdownComponent {
   @Input() loading: boolean = false;
   @Input() isRefreshing: boolean = false;
   @Input() refetch = false;
+  toggle = false;
 
   @Output() dataChange = new EventEmitter<any>();
   @Output() loadingChange = new EventEmitter<boolean>();
@@ -107,8 +108,12 @@ export class TisServerSideDropdownComponent {
     if (changes['payload']) {
       if (changes['payload']?.currentValue && Object.keys(changes['payload'].currentValue)?.length) {
         this.config.filter = { ...this.config.filter, ...changes['payload'].currentValue };
-        this.refetch = true;
+        this.toggle = true;
       }
+    }
+
+    if(changes['refetch'] && changes['refetch']?.currentValue){
+      this.toggle = true;
     }
 
     if (changes['config']) {
@@ -232,7 +237,7 @@ export class TisServerSideDropdownComponent {
   }
 
   onRefetchChange(value: boolean) {
-    this.refetch = value;           // update local state (reset to false after fetch)
+    this.toggle = value;           // update local state (reset to false after fetch)
     this.refetchChange.emit(value); // propagate to the consumer
   }
 }

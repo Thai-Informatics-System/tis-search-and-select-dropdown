@@ -2130,7 +2130,7 @@ export class AppComponent {
     },
     multipleServerSideSelect: <ServerSideMultipleSelectionConfig>{
       uri: 'https://mocki.io/v1/32e34bed-6b9f-4d58-a774-e041109f8f7e',
-      method: 'GET',
+      method: 'POST',
       limit: 100,
       setFirstOption: false,
       isSearchable: true,
@@ -2161,6 +2161,10 @@ export class AppComponent {
     }
   }
 
+  serversidePayload = {
+    
+  }
+
   ngOnInit() {
     this.form = new FormGroup({
       singleClientSideSelect: new FormControl('*'),
@@ -2170,6 +2174,13 @@ export class AppComponent {
       multipleServerSideSelect: new FormControl(null),
       singleClientSideSelectWithTags: new FormControl(null),
     });
+
+    // setInterval(() => {
+    //   this.serversidePayload = {
+    //     ...this.serversidePayload,
+    //     random: Math.random()
+    //   }
+    // }, 1000);
 
     // this.form.get('singleClientSideSelect')?.disable();
     // setTimeout(() => {
