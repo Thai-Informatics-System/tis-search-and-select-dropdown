@@ -1,55 +1,77 @@
-<ul class="tis-dropdown {{classes}}" style="width: 100%; display: inline-flex; align-items: center; padding: 0px; margin: 0px;">
-    <li [attr.id]="customId" style="--list-width: {{config?.isEnableRefreshMode? '40px': '0px'}}; list-style: none; padding: 0px; margin: 0px; position: relative; min-width: calc(100% - var(--list-width));">
+<ul class="tis-dropdown {{classes}}"
+    style="width: 100%; display: inline-flex; align-items: center; padding: 0px; margin: 0px;">
+    <li [attr.id]="customId"
+        style="--list-width: {{config?.isEnableRefreshMode? '40px': '0px'}}; list-style: none; padding: 0px; margin: 0px; position: relative; min-width: calc(100% - var(--list-width));">
         <mat-form-field class="tis-client-side-multiple-select" style="width: 100%;" [appearance]="appearance">
             <mat-label>{{label}}</mat-label>
             <!-- [multiple]="true" -->
             <mat-select [formControl]="listCtrl" [multiple]="true" (openedChange)="onOpenedChange($event)">
                 @if (config?.isSearchable) {
-                    <!-- [placeholderLabel]="placeholder ?? label" -->
-                    <mat-select-search [formControl]="searchFilterCtrl" [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="noEntriesFoundLabel" [loading]="loading"></mat-select-search>
+                <!-- [placeholderLabel]="placeholder ?? label" -->
+                <mat-select-search [formControl]="searchFilterCtrl" [placeholderLabel]="'Search...'"
+                    [noEntriesFoundLabel]="noEntriesFoundLabel" [loading]="loading"></mat-select-search>
                 }
-        
+
                 @if (config?.isAllOption) {
-                    <mat-option value="*" [style.display]="searchFilterCtrl.value == '' && data.length > 0 ? 'flex': 'none'">All</mat-option>
+                <mat-option value="*"
+                    [style.display]="searchFilterCtrl.value == '' && data.length > 0 ? 'flex': 'none'">All</mat-option>
                 }
                 <ng-container *ngFor="let option of options | async; let i = index;">
-                    <mat-option style="position: relative !important;" [style.padding-right]="setPadding(option[valueKey]+'_'+i)" *ngIf="option && option[valueKey]" [value]="option[valueKey]" matTooltipPosition="right" [matTooltip]="option[nameKey] + '' + displayAdditional(option)" [matTooltipShowDelay]="100" matTooltipTouchGestures="off" [style.display]="option?.isHidden ? 'none': 'flex'">
-                        {{option[nameKey]}} <span *ngIf="(additionalNameKeys?.length ?? 0) > 0">{{displayAdditional(option)}}</span>
-                        <span *ngIf="badgeKey && badgeKey != '' && option[badgeKey]?.length" id="badge_{{option[valueKey]}}_{{i}}" style="display: flex; gap: 5px; justify-content: center; align-items: center; position: absolute; right: 5px; top: 10px;">
+                    <mat-option style="position: relative !important;"
+                        [style.padding-right]="setPadding(option[valueKey]+'_'+i)"
+                        *ngIf="option && option[valueKey] && data.length > 0" [value]="option[valueKey]"
+                        matTooltipPosition="right" [matTooltip]="option[nameKey] + '' + displayAdditional(option)"
+                        [matTooltipShowDelay]="100" matTooltipTouchGestures="off"
+                        [style.display]="option?.isHidden ? 'none': 'flex'">
+                        {{option[nameKey]}} <span
+                            *ngIf="(additionalNameKeys?.length ?? 0) > 0">{{displayAdditional(option)}}</span>
+                        <span *ngIf="badgeKey && badgeKey != '' && option[badgeKey]?.length"
+                            id="badge_{{option[valueKey]}}_{{i}}"
+                            style="display: flex; gap: 5px; justify-content: center; align-items: center; position: absolute; right: 5px; top: 10px;">
                             @for(r of option[badgeKey]; track r; let ndx = $index; let last = $last){
-                                <span *ngIf="getBadge(r)" class="tis-badge-sm tis-badge-round {{getBadge(r)?.class}}">{{getBadge(r)?.value}}</span>
+                            <span *ngIf="getBadge(r)"
+                                class="tis-badge-sm tis-badge-round {{getBadge(r)?.class}}">{{getBadge(r)?.value}}</span>
                             }
                         </span>
                     </mat-option>
                 </ng-container>
             </mat-select>
             @for (validation of validationMessages; track validation.type) {
-                <mat-error *ngIf="listCtrl?.hasError(validation.type) && (listCtrl?.dirty || listCtrl?.touched)">
-                    {{validation.message}}
-                </mat-error>
+            <mat-error *ngIf="listCtrl?.hasError(validation.type) && (listCtrl?.dirty || listCtrl?.touched)">
+                {{validation.message}}
+            </mat-error>
             }
-        
+
             @if (config?.hint && (config?.hint?.label || config?.hint?.msg)) {
-                <mat-hint style="line-height: 0px !important;">
-                    <p style="margin: 0px;">
-                        <span [style.color]="config?.hint?.color" *ngIf="config?.hint?.label">{{config?.hint?.label}} : </span>
-                        {{ config?.hint?.msg }}
-                    </p>
-                </mat-hint>
+            <mat-hint style="line-height: 0px !important;">
+                <p style="margin: 0px;">
+                    <span [style.color]="config?.hint?.color" *ngIf="config?.hint?.label">{{config?.hint?.label}} :
+                    </span>
+                    {{ config?.hint?.msg }}
+                </p>
+            </mat-hint>
             }
-        
+
             @if (config?.createNew && config?.createNew?.label) {
-                <mat-hint [style.padding]="config?.hint ? '4px' : null">
-                    <a [routerLink]="config?.createNew?.url" target="_blank" style="text-decoration: underline; cursor: pointer;" [style.color]="config?.createNew?.color" *ngIf="!config?.createNew?.clickBtn">{{config?.createNew?.label}}</a>
-                    <a style="text-decoration: underline; cursor: pointer;" [style.color]="config?.createNew?.color" *ngIf="config?.createNew?.clickBtn" (click)="config?.createNew?.clickBtn()">{{config?.createNew?.label}}</a>
-                </mat-hint>
+            <mat-hint [style.padding]="config?.hint ? '4px' : null">
+                <a [routerLink]="config?.createNew?.url" target="_blank"
+                    style="text-decoration: underline; cursor: pointer;" [style.color]="config?.createNew?.color"
+                    *ngIf="!config?.createNew?.clickBtn">{{config?.createNew?.label}}</a>
+                <a style="text-decoration: underline; cursor: pointer;" [style.color]="config?.createNew?.color"
+                    *ngIf="config?.createNew?.clickBtn"
+                    (click)="config?.createNew?.clickBtn()">{{config?.createNew?.label}}</a>
+            </mat-hint>
             }
         </mat-form-field>
-        <mat-progress-spinner class="tis-dropdown-loader" mode="indeterminate" style="position: absolute; top: 15px; right: 9px;" [diameter]="25" *ngIf="loading"></mat-progress-spinner>
+        <mat-progress-spinner class="tis-dropdown-loader" mode="indeterminate"
+            style="position: absolute; top: 15px; right: 9px;" [diameter]="25" *ngIf="loading"></mat-progress-spinner>
         <!-- <i class="fas fa-spinner fa-spin" style="position: absolute; top: 20px; right: 13px;" *ngIf="loading"></i> -->
     </li>
-    <li style="list-style: none; width: 40px; padding: 0px; margin: 0px; margin-left: 5px; margin-bottom: 15px; padding-bottom: 5px;" *ngIf="config?.isEnableRefreshMode">
-        <mat-icon style="cursor: pointer; position: relative !important" (click)="config?.clickRefreshBtn ? config?.clickRefreshBtn() : refreshData();" *ngIf="!isRefreshing">autorenew</mat-icon>
+    <li style="list-style: none; width: 40px; padding: 0px; margin: 0px; margin-left: 5px; margin-bottom: 15px; padding-bottom: 5px;"
+        *ngIf="config?.isEnableRefreshMode">
+        <mat-icon style="cursor: pointer; position: relative !important"
+            (click)="config?.clickRefreshBtn ? config?.clickRefreshBtn() : refreshData();"
+            *ngIf="!isRefreshing">autorenew</mat-icon>
         <mat-progress-spinner mode="indeterminate" [diameter]="20" *ngIf="isRefreshing"></mat-progress-spinner>
     </li>
 </ul>

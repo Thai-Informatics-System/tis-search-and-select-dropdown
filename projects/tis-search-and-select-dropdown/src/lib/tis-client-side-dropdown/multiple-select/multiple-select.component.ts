@@ -409,8 +409,8 @@ export class MultipleSelectComponent {
           ).subscribe((r: any) => {
             // Split the dataValueKey by '.' and navigate through the nested object
             let data = this.getNestedValue(r, this.config?.dataValueKey ?? 'data');
-            this.data = data || [];
-            this.initialOptions = data || [];
+            this.data = data ?? [];
+            this.initialOptions = data ?? [];
 
             this.initialDataChange.emit(this.data);
             this.prepareData();
@@ -486,16 +486,15 @@ export class MultipleSelectComponent {
     // get the search keyword
     let search = this.searchFilterCtrl.value;
     if (!search) {
-      this.data = this.initialOptions?.length ? this.initialOptions : this.initialData;
-      this.options.next(this.data?.slice());
+      this.data = this.initialData;
+      this.options.next(this.initialData?.slice());
       return;
     } else {
       search = search.toLowerCase();
     }
     // filter the data
 
-    let sourceData = this.initialOptions?.length ? this.initialOptions : this.initialData;
-    let data: any[] = sourceData?.length ? JSON.parse(JSON.stringify(sourceData)) : [];
+    let data: any[] = this.data?.length ? JSON.parse(JSON.stringify(this.data)) : [];
 
     data = data?.filter(d => d && Object.keys(d).length > 0);
 
