@@ -2,6 +2,11 @@
     style="width: 100%; display: inline-flex; align-items: center; padding: 0px; margin: 0px;">
     <li [attr.id]="customId"
         style="--list-width: {{config?.isEnableRefreshMode? '40px': '0px'}}; list-style: none; padding: 0px; margin: 0px; position: relative; min-width: calc(100% - var(--list-width));">
+        {{data | json}}
+        <br>
+        <br>
+        <br>
+        {{(options | async) | json}}
         <mat-form-field class="tis-client-side-multiple-select" style="width: 100%;" [appearance]="appearance">
             <mat-label>{{label}}</mat-label>
             <!-- [multiple]="true" -->
