@@ -464,6 +464,9 @@ export class MultipleSelectComponent {
     if (Array.isArray(this.data) && this.data?.length) {
       this.options.next(this.data.slice());
     }
+    else {
+      this.options.next([]);
+    }
     setTimeout(() => {
       this.isReset = false;
     }, 300);
