@@ -32,6 +32,8 @@ export class TisServerSideDropdownComponent {
   @Input({ required: true }) type: string = 'single';
   @Input({ required: true }) label!: string;
   @Input() placeholder!: string;
+  @Input() isLabelOutside: boolean = false;
+  @Input() isDisplayPlaceholder = false;
   @Input() disabled = false;
   @Input() isRequired = false;
   @Input({ required: true }) nameKey!: string;

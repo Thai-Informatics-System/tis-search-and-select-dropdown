@@ -29,6 +29,8 @@ export class MultipleSelectComponent {
   @Input({ required: true }) valueKey!: string;
   @Input({ required: true }) label!: string;
   @Input() placeholder!: string;
+  @Input() isLabelOutside = false;
+  @Input() isDisplayPlaceholder = true;
   @Input() disabled = false;
   @Input() isRequired = false;
   @Input() initialData: any[] = [];
@@ -622,5 +624,9 @@ export class MultipleSelectComponent {
     const sortedArr2 = arr2?.slice().sort();
     // Compare the sorted arrays
     return JSON.stringify(sortedArr1) === JSON.stringify(sortedArr2);
+  }
+
+  get checkValidation(){
+    return this.listCtrl.hasValidator(Validators.required);
   }
 }

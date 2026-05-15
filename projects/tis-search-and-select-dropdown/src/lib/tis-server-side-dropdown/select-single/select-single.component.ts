@@ -26,6 +26,8 @@ export class SelectSingleComponent {
   @Input({ required: true }) valueKey!: string;
   @Input({ required: true }) label!: string;
   @Input() placeholder!: string;
+  @Input() isLabelOutside = false;
+  @Input() isDisplayPlaceholder = true;
   @Input() disabled = false;
   @Input() isRequired = false;
   @Input() initialData: any[] = [];
@@ -495,5 +497,9 @@ export class SelectSingleComponent {
       const parentWidth = parent.offsetWidth;
       child.style.width = `${parentWidth - 6}px`;
     }
+  }
+
+  get checkValidation(){
+    return this.listCtrl.hasValidator(Validators.required);
   }
 }

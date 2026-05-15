@@ -1,12 +1,14 @@
 @if(type == 'single'){
-    <app-single-select [customId]="customId" [appearance]="appearance" [classes]="classes" [panelClass]="panelClass" [label]="label" [placeholder]="placeholder"
+    <app-single-select [customId]="customId" [appearance]="appearance" [classes]="classes" [panelClass]="panelClass"
+        [label]="label" [placeholder]="placeholder" [isLabelOutside]="isLabelOutside" [isDisplayPlaceholder]="isDisplayPlaceholder"
         [formControl]="fc" [isRequired]="isRequired" [nameKey]="nameKey" [valueKey]="valueKey" [initialData]="data"
         (initialDataChange)="setData($event)" [validationMessages]="validationMessages" [config]="config"
         [(loading)]="loading" [isRefreshing]="isRefreshing" (loadingChange)="onLoadingChange($event)" [(refetch)]="toggle"
         [isRequiredPayload]="isRequiredPayload" [payload]="payload"></app-single-select>
 }
 @else if(type == 'multiple'){
-    <app-multiple-select [customId]="customId" [appearance]="appearance" [classes]="classes" [panelClass]="panelClass" [label]="label" [placeholder]="placeholder"
+    <app-multiple-select [customId]="customId" [appearance]="appearance" [classes]="classes" [panelClass]="panelClass"
+        [label]="label" [placeholder]="placeholder" [isLabelOutside]="isLabelOutside" [isDisplayPlaceholder]="isDisplayPlaceholder"
         [formControl]="fc" [isRequired]="isRequired" [nameKey]="nameKey" [valueKey]="valueKey" [initialData]="data"
         (initialDataChange)="setData($event)" [validationMessages]="validationMessages" [config]="config"
         [(loading)]="loading" [isRefreshing]="isRefreshing" (loadingChange)="onLoadingChange($event)" [(refetch)]="toggle"
