@@ -34,3 +34,11 @@
 .tis-dropdown-loader{
     --mdc-circular-progress-active-indicator-color: var(--tis-dropdown-loader-color, gray) !important;
 }
+
+::ng-deep .tis-dropdown-placeholder .mat-mdc-notch-piece .mdc-floating-label--float-above{
+    display: none !important;
+}
+
+::ng-deep .tis-dropdown-placeholder .mat-mdc-notch-piece:has(.mdc-floating-label--float-above){
+    display: none !important;
+}
