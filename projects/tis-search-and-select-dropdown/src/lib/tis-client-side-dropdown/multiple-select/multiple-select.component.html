@@ -1,4 +1,4 @@
-<label class="tis-mat-label" *ngIf="isLabelOutside">
+<label class="tis-mat-label" *ngIf="isLabelOutside && label && label != ''">
     {{label}}
     @if(this.checkValidation){
         <span class="tis-text-error">*</span>
@@ -8,9 +8,9 @@
     <li [attr.id]="customId"
         style="--list-width: {{config?.isEnableRefreshMode? '40px': '0px'}}; list-style: none; padding: 0px; margin: 0px; position: relative; min-width: calc(100% - var(--list-width));">
         <mat-form-field class="tis-client-side-multiple-select" style="width: 100%;" [appearance]="appearance">
-            <mat-label *ngIf="!isLabelOutside">{{label}}</mat-label>
+            <mat-label *ngIf="!isLabelOutside && label && label != ''">{{label}}</mat-label>
             <!-- [multiple]="true" -->
-            <mat-select [formControl]="listCtrl" [multiple]="true" (openedChange)="onOpenedChange($event)">
+            <mat-select [formControl]="listCtrl" [placeholder]="placeholder || ''" [multiple]="true" (openedChange)="onOpenedChange($event)">
                 @if (config?.isSearchable) {
                 <!-- [placeholderLabel]="placeholder ?? label" -->
                 <mat-select-search [formControl]="searchFilterCtrl" [placeholderLabel]="'Search...'"
