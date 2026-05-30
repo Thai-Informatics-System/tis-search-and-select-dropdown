@@ -34,6 +34,7 @@ export class TisClientSideDropdownComponent {
   @Input({ required: true }) type: string = 'single';
   @Input({ required: true }) label!: string;
   @Input() placeholder!: string;
+  @Input() allOptionsLabel: string = "All";
   @Input() isLabelOutside = false;
   @Input() isDisplayPlaceholder = true;
   @Input() disabled = false;
@@ -48,6 +49,8 @@ export class TisClientSideDropdownComponent {
   @Input() panelClass = "";
   @Input() customId: string = generateRandomString(10);
   @Input() validationMessages: ValidationMessages[] = [];
+  @Input() prefix: string = '';
+  @Input() suffix: string = ''; 
   @Input({ required: true }) config!: ClientSideSingleSelectionConfig;
   @Input() loading: boolean = false;
   @Input() isRefreshing: boolean = false;

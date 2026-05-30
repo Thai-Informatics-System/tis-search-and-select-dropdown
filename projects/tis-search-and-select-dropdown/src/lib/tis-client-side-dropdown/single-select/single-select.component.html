@@ -8,6 +8,14 @@
     <li [attr.id]="customId" style="--list-width: {{config?.isEnableRefreshMode? '40px': '0px'}}; list-style: none; padding: 0px; margin: 0px; position: relative; min-width: calc(100% - var(--list-width));">
         <mat-form-field class="tis-client-side-single-select" style="width: 100%;" [appearance]="appearance">
             <mat-label *ngIf="!isLabelOutside && label && label != ''">{{label}}</mat-label>
+            
+            @if(prefix && prefix != ''){
+                <span matPrefix [innerHTML]="prefix"></span>
+            }
+            @if(suffix && suffix != ''){
+                <span matSuffix [innerHTML]="suffix"></span>
+            }
+            
             <mat-select [formControl]="listCtrl" [placeholder]="placeholder || ''" #singleSelect (openedChange)="onOpenedChange($event)">
                 @if (config?.isSearchable) {
                     <!-- [placeholderLabel]="placeholder ?? label" -->
@@ -15,7 +23,7 @@
                 }
 
                 @if (config?.isAllOption && searchFilterCtrl.value == '' && data.length > 0) {
-                    <mat-option value="*">All</mat-option>
+                    <mat-option value="*">{{allOptionsLabel}}</mat-option>
                 }
                 <ng-container *ngFor="let option of options | async; let i = index;">
                     <mat-option style="position: relative !important;" [style.padding-right]="setPadding(option[valueKey]+'_'+i)" *ngIf="option && option[valueKey]" [value]="option[valueKey]" matTooltipPosition="right" [matTooltip]="option[nameKey] + '' + displayAdditional(option)" [matTooltipShowDelay]="100" matTooltipTouchGestures="off">

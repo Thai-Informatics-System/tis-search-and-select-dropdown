@@ -29,6 +29,7 @@ export class SingleSelectComponent {
   @Input({ required: true }) valueKey!: string;
   @Input({ required: true }) label!: string;
   @Input() placeholder!: string;
+  @Input() allOptionsLabel: string = "All";
   @Input() isLabelOutside = false;
   @Input() isDisplayPlaceholder = true;
   @Input() disabled = false;
@@ -42,6 +43,8 @@ export class SingleSelectComponent {
   @Input() isRequiredPayload = false;
   @Input() validationMessages: ValidationMessages[] = [];
   @Input() payload: any;
+  @Input() prefix: string = '';
+  @Input() suffix: string = ''; 
   @Input({ required: true }) config!: ClientSideSingleSelectionConfig;
   @Input() loading: boolean = false;
   @Input() isRefreshing: boolean = false;
