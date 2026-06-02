@@ -9,8 +9,12 @@
         <mat-form-field class="tis-server-side-single-select" style="width: 100%;" [appearance]="appearance">
             <mat-label *ngIf="!isLabelOutside && label && label != ''">{{label}}</mat-label>
             
-            <mat-icon matPrefix>{{prefix}}</mat-icon>
-            <mat-icon matSuffix>{{suffix}}</mat-icon>
+            @if(prefix && prefix != ''){
+                <mat-icon matPrefix>{{prefix}}</mat-icon>
+            }
+            @if(suffix && suffix != ''){
+                <mat-icon matSuffix>{{suffix}}</mat-icon>
+            }
 
             <mat-select [formControl]="listCtrl" [placeholder]="placeholder || ''" #singleSelect (openedChange)="onOpenedChange($event)">
                 @if (config?.isSearchable) {
