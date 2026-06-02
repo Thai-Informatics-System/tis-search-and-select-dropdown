@@ -10,12 +10,8 @@
         <mat-form-field class="tis-client-side-multiple-select" style="width: 100%;" [appearance]="appearance">
             <mat-label *ngIf="!isLabelOutside && label && label != ''">{{label}}</mat-label>
             <!-- [multiple]="true" -->
-            @if(prefix && prefix != ''){
-                <span matPrefix [innerHTML]="prefix"></span>
-            }
-            @if(suffix && suffix != ''){
-                <span matSuffix [innerHTML]="suffix"></span>
-            }
+            <span matPrefix [innerHTML]="prefix"></span>
+            <span matSuffix [innerHTML]="suffix"></span>
 
             <mat-select [formControl]="listCtrl" [placeholder]="placeholder || ''" [multiple]="true" (openedChange)="onOpenedChange($event)">
                 @if (config?.isSearchable) {
