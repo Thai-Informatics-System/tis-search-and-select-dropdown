@@ -10,8 +10,8 @@
           <mat-label *ngIf="!isLabelOutside && label && label != ''">{{label}}</mat-label>
           <!-- [multiple]="true" -->
           
-            <span matPrefix [innerHTML]="prefix"></span>
-            <span matSuffix [innerHTML]="suffix"></span>
+          <mat-icon matPrefix>{{prefix}}</mat-icon>
+          <mat-icon matSuffix>{{suffix}}</mat-icon>
 
           <mat-select [formControl]="listCtrl" [placeholder]="placeholder || ''" [multiple]="true" (openedChange)="onOpenedChange($event)">
               @if (config?.isSearchable) {
